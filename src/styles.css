@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@source "../node_modules/flowbite";
+
+@theme {
+  --color-nav:#FFD95F;
+  --font-main:"segoe ui light";
+  --color-rating:#38AE04;
+}
+
+
+@layer components {
+  .nav-link {
+    @apply flex gap-x-1 items-center py-2 px-3 hover:text-gray-600 tracking-tighter rounded-sm md:bg-transparent md:text-black capitalize text-xl md:p-0 dark:text-white md:dark:text-blue-500
+  }
+  .drop-item {
+    @apply flex items-center gap-x-2 text-[17px] px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white
+  }
+  .header {
+    @apply font-bold flex uppercase text-3xl mb-5 before:content-[''] before:me-2 before:w-2 before:h-10 before:inline-block before:bg-nav;
+  }
+  .view-all {
+   @apply text-gray-900 mb-5 capitalize bg-white border border-gray-300 focus:outline-none hover:bg-gray-100  font-bold rounded-lg text-lg cursor-pointer px-5 py-2.5 me-2  dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700
+  }
+}
