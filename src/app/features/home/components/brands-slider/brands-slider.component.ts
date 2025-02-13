@@ -3,10 +3,11 @@ import { Ibrand } from '../../../brands/models/ibrand';
 import { BrandsService } from '../../../brands/services/brands.service';
 import { BrandCardComponent } from "../../../brands/components/brand-card/brand-card.component";
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-brands-slider',
-  imports: [BrandCardComponent, CarouselModule],
+  imports: [BrandCardComponent, CarouselModule,RouterLink],
   templateUrl: './brands-slider.component.html',
   styleUrl: './brands-slider.component.css'
 })
@@ -39,7 +40,7 @@ export class BrandsSliderComponent implements OnInit {
   constructor(private brandsService: BrandsService) { }
 
   getBrands() {
-    this.brandsService.getBrands().subscribe({
+    this.brandsService.getBrands(1).subscribe({
       next: ({ data }) => {
         this.brands = data.slice(0,9);
         console.log(this.brands);

@@ -14,4 +14,9 @@ export class CategoriesService {
     return this.httpClient.get(env.BASE_URL + 'categories');
   }
 
+
+  getSpecificCategoryProds(catId:string,limit:number=15 , page:number=1): Observable<any> {
+    return this.httpClient.get(env.BASE_URL +`products?category[in]=${catId}&limit=${limit}&page=${page}`)
+  }
+
 }

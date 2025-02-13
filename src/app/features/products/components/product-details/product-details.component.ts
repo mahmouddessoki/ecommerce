@@ -1,36 +1,55 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Iproduct } from '../../models/iproduct';
 import { ProductsService } from '../../services/products.service';
+import { RelatedProductsComponent } from "../related-products/related-products.component";
+import { PaginationComponent } from "../../../../shared/components/pagination/pagination.component";
 
 @Component({
   selector: 'app-product-details',
-  imports: [],
+  imports: [RelatedProductsComponent, PaginationComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
-export class ProductDetailsComponent {
+export class ProductDetailsComponent implements OnInit {
 
   private readonly routes = inject(ActivatedRoute)
   private readonly productsService = inject(ProductsService)
   id!: string | null;
   product: Iproduct = {} as Iproduct;
-  activeImgSrc!:string;
+  relatedProducts: Iproduct[] = [];
+  activeImgSrc!: string;
+  totalPages!: number;
+  currentPage: number = 1;
   getProductId() {
     this.routes.paramMap.subscribe({
       next: (res) => {
         this.id = res.get('id')
-        console.log(this.id);
+        this.getDetails(this.id as string);
+
       }
     })
   }
 
 
-  getDetails() {
-    this.productsService.getProductDetails(this.id as string).subscribe({
+  getDetails(prodId:string) {
+    this.productsService.getProductDetails(prodId).subscribe({
       next: ({ data }) => {
         this.product = data
         console.log(this.product);
+        this.getRelatedProducts();
+
+      }
+    })
+  }
+
+  getRelatedProducts() {
+    this.productsService.getRelatedProducts(this.product.category._id,this.currentPage).subscribe({
+      next: ({ data, metadata: { numberOfPages } }) => {
+        this.relatedProducts = data
+        this.totalPages = numberOfPages;
+
+
       }
     })
   }
@@ -42,12 +61,15 @@ export class ProductDetailsComponent {
 
   }
 
-
+  getPage(e: number) {
+    this.currentPage = e
+    this.getRelatedProducts()
+  }
 
   ngOnInit(): void {
     this.getProductId();
-    this.getDetails();
   }
+
 
 
 }

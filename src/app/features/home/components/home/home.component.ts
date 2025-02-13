@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MainSliderComponent } from "../main-slider/main-slider.component";
 import { CategoriesSliderComponent } from "../categories-slider/categories-slider.component";
@@ -6,13 +6,38 @@ import { RecommededProductsComponent } from "../recommeded-products/recommeded-p
 import { BrandsSliderComponent } from "../brands-slider/brands-slider.component";
 import { ProductCardComponent } from "../../../products/components/product-card/product-card.component";
 import { HomeProductsComponent } from "../home-products/home-products.component";
+import { CategoriesService } from '../../../categories/services/categories.service';
+import { Category } from '../../../categories/models/category';
+import { SpecificCategoryProductsComponent } from '../../../products/components/specific-category-products/specific-category-products.component';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterOutlet, MainSliderComponent, CategoriesSliderComponent, RecommededProductsComponent, BrandsSliderComponent, ProductCardComponent, HomeProductsComponent],
+  imports: [RouterOutlet, MainSliderComponent, CategoriesSliderComponent, RecommededProductsComponent, BrandsSliderComponent, HomeProductsComponent, SpecificCategoryProductsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
+    private readonly categoriesService = inject(CategoriesService)
+    catIds:string[] = [];
+
+    getCategoriesIds() {
+      this.categoriesService.getCategories().subscribe({
+        next: ({ data }) => {
+          data.forEach((el:Category)=>{
+            this.catIds.push(el._id);
+          });
+          console.log(this.catIds);
+        }
+      })
+    }
+
+
+
+    ngOnInit(): void {
+      this.getCategoriesIds();
+    }
+
+
 
 }

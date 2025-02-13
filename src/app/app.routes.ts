@@ -5,12 +5,16 @@ import { authRoutes } from './features/Authentication/auth.routing';
 import { homeRoutes } from './features/home/home.routing';
 
 export const routes: Routes = [
+
+
+  {
+    path: '', component: AuthLayoutComponent,
+    children: authRoutes
+  },
   {
     path: '', component: UserLayoutComponent
     , children: homeRoutes
   },
-  {path:'', component:AuthLayoutComponent ,
-    children:authRoutes
-  },
+
 
 ];

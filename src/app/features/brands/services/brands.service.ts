@@ -10,7 +10,9 @@ export class BrandsService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getBrands(): Observable<any>{
-    return this.httpClient.get(env.BASE_URL +'brands')
+  getBrands(page:number): Observable<any>{
+    return this.httpClient.get(env.BASE_URL +`brands?page=${page}&limit=8`)
   }
+
+
 }
