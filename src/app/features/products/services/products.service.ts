@@ -30,4 +30,9 @@ export class ProductsService {
   getSpecificCategoryProds(catId: string, limit: number = 15, page: number = 1): Observable<any> {
     return this.httpClient.get(env.BASE_URL + `products?category[in]=${catId}&limit=${limit}&page=${page}`)
   }
+
+  getBrandsProducts(brandId: string, limit: number = 15, page: number): Observable<any>{
+    return this.httpClient.get(env.BASE_URL + `products?brand=${brandId}&limit=${limit}&page=${page}`)
+
+  }
 }

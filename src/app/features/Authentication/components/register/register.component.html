@@ -4,58 +4,116 @@
     <div class="relative bg-white rounded-lg shadow-md shadow-gray-300 dark:bg-gray-700">
       <!-- Modal header -->
       <div
-        class="flex items-start  h-[170px] bg-contain bg-no-repeat bg-center   justify-between p-2  rounded-t dark:border-gray-600 border-gray-200">
+        class="flex items-start  h-[170px]    justify-between p-2  rounded-t dark:border-gray-600 border-gray-200">
 
-      <img src="/imgs/auth.png" class="" alt="">
+        <img src="/imgs/auth.png" class="" alt="">
       </div>
       <!-- Modal body -->
       <div class="p-4 md:p-5">
 
-
-
         <form class="space-y-4" [formGroup]="authForm" (ngSubmit)="register()">
+
           <div>
-            <input type="text" name="name" id="name" class="form-input" placeholder="Enter your name"
-              formControlName="name" />
+            @let nameControl = authForm.get('name')!;
+            <input [class]="{
+              'invalid-input':nameControl?.errors &&
+               (nameControl?.touched ||  nameControl?.dirty),
+              'valid-input': !nameControl?.errors &&
+              (nameControl?.touched || nameControl?.dirty)
+            }" type="text" class="form-input" placeholder="Enter your name" formControlName="name" />
+
+            <validation-messages [control]="nameControl" />
           </div>
           <div>
-            <input type="email" name="email" id="email" class="form-input" placeholder="Enter your email address"
+            @let emailControl = authForm.get('email')!;
+
+            <input [class]="{
+              'invalid-input':emailControl?.errors &&
+               (emailControl?.touched ||  emailControl?.dirty),
+              'valid-input': !emailControl?.errors &&
+              (emailControl?.touched || emailControl?.dirty)
+            }" type="email" name="email" id="email" class="form-input" placeholder="Enter your email address"
               formControlName="email" />
+            <validation-messages [control]="emailControl" />
+
           </div>
-          <div>
+          <div class="relative">
+            @let passControl = authForm.get('password');
+            <input (blur)="tooltip=false" (input)="tooltip = true" [class]="{
+              'invalid-input':passControl?.errors &&
+               (passControl?.touched ||  passControl?.dirty),
+              'valid-input': !passControl?.errors &&
+              (passControl?.touched || passControl?.dirty)
+            }" type="password" data-popover-target="popover-password" popover-trigger="focus"
+              data-popover-placement="bottom" name="password" id="password" placeholder="Enter your password"
+              class="form-input" formControlName="password" />
+            <validation-messages [control]="passControl" />
 
-            <input type="password" name="password" id="password" placeholder="Enter your password" class="form-input"
-              formControlName="password" />
-          </div>
-          <div>
-
-            <input type="password" name="rePassword" id="rePassword" placeholder="confirm your password"
-              class="form-input placeholder:capitalize" formControlName="rePassword" />
-          </div>
 
 
+            @if (tooltip) {
 
-          <button type="submit" class="form-btn">
-            @if (!isLoading) {
-            Sign Up
+            <app-validation-hint [authForm]="authForm" [control]="passControl" />
 
-            }@else {
-            <svg aria-hidden="true" role="status" class="inline w-7 h-7 me-3 text-white animate-spin"
-              viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                fill="#E5E7EB" />
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                fill="currentColor" />
-            </svg>
+
             }
-          </button>
-          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-            Already have an account? <a routerLink="/login"
-              class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login
-              here</a>
-          </p>
+
+
+
+
+
+
+
+          </div>
+          <div>
+            @let rePassControl = authForm.get('rePassword');
+
+            <input [class]="{
+              'invalid-input':authForm.errors &&
+               (rePassControl?.touched ||  rePassControl?.dirty),
+              'valid-input': !authForm.errors &&
+              (rePassControl?.touched || rePassControl?.dirty)
+            }" type="password" name="rePassword" id="rePassword" placeholder="confirm your password"
+              class="form-input placeholder:capitalize" formControlName="rePassword" />
+
+            <validation-messages [control]="authForm" />
+
+
+
+
+
+
+            <button type="submit" class="form-btn mt-4">
+              @if (!isLoading) {
+              Sign Up
+
+              }@else {
+              <svg aria-hidden="true" role="status" class="inline w-7 h-7 me-3 text-white animate-spin"
+                viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="#E5E7EB" />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentColor" />
+              </svg>
+              }
+            </button>
+            <p class="text-sm font-light mb-0   flex justify-between items-center text-gray-500 dark:text-gray-400">
+              <span>
+                Already have an account? <a routerLink="/login"
+                  class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login
+                  here</a>
+              </span>
+
+
+            </p>
+            @if (resMsg) {
+            <p class="error-msg mt-0 text-center">
+              {{resMsg}}
+            </p>
+            }
+          </div>
 
         </form>
 

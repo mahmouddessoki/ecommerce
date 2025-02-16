@@ -25,7 +25,7 @@
             wishlist<i class="fa-regular fa-heart"></i></a>
         </li>
 
-        @if (layout === "user"){
+
 
         <li>
           <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
@@ -60,15 +60,7 @@
             </div>
           </div>
         </li>
-        }@else {
-        <li>
-          <!-- data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" -->
-          <a routerLink="/login"
-            class="nav-link cursor-pointer">
-            Login<i class="fa-regular fa-user"></i></a>
-        </li>
-
-        }
+        
       </ul>
       }@else  {
       <ul
@@ -78,12 +70,12 @@
         <li>
           <!-- data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" -->
           <a routerLink="/login" class="nav-link -tracking-[1px] cursor-pointer">
-            Sign In<i class="fa-regular fa-user"></i></a>
+            Sign In<i class="fa-regular fa-user text-sm"></i></a>
         </li>
         <li>
           <!-- data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" -->
           <a routerLink="/register" class="nav-link -tracking-[1px] cursor-pointer">
-          Sign Up <i class="fa-solid fa-user-plus"></i></a>
+          Sign Up <i class="fa-solid fa-user-plus text-sm"></i></a>
         </li>
 
 

@@ -4,9 +4,12 @@
     <div class="relative bg-white rounded-lg shadow-md shadow-gray-300 dark:bg-gray-700">
       <!-- Modal header -->
       <div
-        class="flex items-start h-[200px] bg-cover bg-center   justify-between p-2  rounded-t dark:border-gray-600 border-gray-200">
+        class="flex items-start overflow-hidden h-[200px]  justify-between p-2  rounded-t dark:border-gray-600 border-gray-200">
 
-      <img src="/imgs/auth.png" class="" alt="">
+
+        <img src="/imgs/auth.png" class="" alt="">
+
+        <!-- <img src="/imgs/auth.png" class="" alt=""> -->
 
       </div>
       <!-- Modal body -->
@@ -17,13 +20,27 @@
 
         <form class="space-y-4" [formGroup]="authForm" (ngSubmit)="login()">
           <div>
-            <input type="email" name="email" id="email" class="form-input" placeholder="enter your email address"
-              formControlName="email" />
+            @let emailControl = authForm.get('email')!;
+
+            <input [class]="{
+                          'invalid-input':emailControl?.errors &&
+                           (emailControl?.touched ||  emailControl?.dirty),
+                          'valid-input': !emailControl?.errors &&
+                          (emailControl?.touched || emailControl?.dirty)
+                        }" type="email" name="email" id="email" class="form-input"
+              placeholder="enter your email address" formControlName="email" />
           </div>
           <div>
 
-            <input type="password" name="password" id="password" placeholder="enter your password" class="form-input"
-              formControlName="password" />
+            @let passControl = authForm.get('password');
+
+            <input [class]="{
+                          'invalid-input':passControl?.errors &&
+                           (passControl?.touched ||  passControl?.dirty),
+                          'valid-input': !passControl?.errors &&
+                          (passControl?.touched || passControl?.dirty)
+                        }" type="password" name="password" id="password" placeholder="enter your password"
+              class="form-input" formControlName="password" />
           </div>
           <div class="flex justify-between">
             <div class="flex items-start">
@@ -56,7 +73,13 @@
             Don’t have an account yet? <a routerLink="/register"
               class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign
               up</a>
+
           </p>
+          @if (resMsg) {
+          <p class="error-msg mt-0 text-center">
+            {{resMsg}}
+          </p>
+          }
 
         </form>
 
