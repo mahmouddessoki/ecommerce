@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../../Authentication/services/auth.service';
+import { FeatureRedirectService } from '../../../../core/services/feature-redirect.service';
 
 @Component({
   selector: 'app-cart-page',
@@ -7,5 +9,11 @@ import { Component } from '@angular/core';
   styleUrl: './cart-page.component.css'
 })
 export class CartPageComponent {
+  private readonly featureRedirectService = inject(FeatureRedirectService)
+  ngOnInit() {
+    this.featureRedirectService.verifyLogin()
+  }
+
+
 
 }

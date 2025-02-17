@@ -1,10 +1,10 @@
+<app-navbar />
 <section class="my-10">
   <div class="relative p-4 w-full max-w-xl max-h-full mx-auto">
     <!-- Modal content -->
     <div class="relative bg-white rounded-lg shadow-md shadow-gray-300 dark:bg-gray-700">
       <!-- Modal header -->
-      <div
-        class="flex items-start  h-[170px]    justify-between p-2  rounded-t dark:border-gray-600 border-gray-200">
+      <div class="flex items-start  h-[170px]    justify-between p-2  rounded-t dark:border-gray-600 border-gray-200">
 
         <img src="/imgs/auth.png" class="" alt="">
       </div>
@@ -15,38 +15,26 @@
 
           <div>
             @let nameControl = authForm.get('name')!;
-            <input [class]="{
-              'invalid-input':nameControl?.errors &&
-               (nameControl?.touched ||  nameControl?.dirty),
-              'valid-input': !nameControl?.errors &&
-              (nameControl?.touched || nameControl?.dirty)
-            }" type="text" class="form-input" placeholder="Enter your name" formControlName="name" />
+            <input appInput [control]="nameControl" type="text" class="form-input" placeholder="Enter your name"
+              formControlName="name" />
 
             <validation-messages [control]="nameControl" />
           </div>
           <div>
             @let emailControl = authForm.get('email')!;
 
-            <input [class]="{
-              'invalid-input':emailControl?.errors &&
-               (emailControl?.touched ||  emailControl?.dirty),
-              'valid-input': !emailControl?.errors &&
-              (emailControl?.touched || emailControl?.dirty)
-            }" type="email" name="email" id="email" class="form-input" placeholder="Enter your email address"
-              formControlName="email" />
+            <input appInput [control]="emailControl" type="email" name="email" id="email" class="form-input"
+              placeholder="Enter your email address" formControlName="email" />
             <validation-messages [control]="emailControl" />
 
           </div>
           <div class="relative">
-            @let passControl = authForm.get('password');
-            <input (blur)="tooltip=false" (input)="tooltip = true" [class]="{
-              'invalid-input':passControl?.errors &&
-               (passControl?.touched ||  passControl?.dirty),
-              'valid-input': !passControl?.errors &&
-              (passControl?.touched || passControl?.dirty)
-            }" type="password" data-popover-target="popover-password" popover-trigger="focus"
-              data-popover-placement="bottom" name="password" id="password" placeholder="Enter your password"
-              class="form-input" formControlName="password" />
+            @let passControl = authForm.get('password')!;
+            <input (blur)="tooltip=false" (input)="tooltip = true"
+            appInput [control]="passControl" type="password"
+              data-popover-target="popover-password" popover-trigger="focus" data-popover-placement="bottom"
+              name="password" id="password" placeholder="Enter your password" class="form-input"
+              formControlName="password" />
             <validation-messages [control]="passControl" />
 
 
@@ -66,14 +54,11 @@
 
           </div>
           <div>
-            @let rePassControl = authForm.get('rePassword');
+            @let rePassControl = authForm.get('rePassword')!;
 
-            <input [class]="{
-              'invalid-input':authForm.errors &&
-               (rePassControl?.touched ||  rePassControl?.dirty),
-              'valid-input': !authForm.errors &&
-              (rePassControl?.touched || rePassControl?.dirty)
-            }" type="password" name="rePassword" id="rePassword" placeholder="confirm your password"
+            <input
+            appInput [control]="rePassControl"
+            type="password" name="rePassword" id="rePassword" placeholder="confirm your password"
               class="form-input placeholder:capitalize" formControlName="rePassword" />
 
             <validation-messages [control]="authForm" />

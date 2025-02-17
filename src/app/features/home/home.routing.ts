@@ -9,14 +9,14 @@ import { CategoryProductsComponent } from "../products/components/category-produ
 import { BrandProductsComponent } from "../brands/components/brand-products/brand-products.component";
 
 export const homeRoutes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'wishlist', component: WishlistComponent },
-  { path: 'cart', component: CartPageComponent },
-  { path: 'products', component: ProductListComponent },
-  { path: 'brands', component: BrandsComponent },
-  { path: 'details/:id', component: ProductDetailsComponent },
-  { path: 'brand/:id', component: BrandProductsComponent },
-  { path: 'category/:id', component: CategoryProductsComponent },
+  { path: 'home', component: HomeComponent,title:'Home' },
+  { path: 'wishlist', component: WishlistComponent,title:'Wishlist' },
+  { path: 'cart', component: CartPageComponent, title:'Cart' },
+  { path: 'products', component: ProductListComponent, title:'Products' },
+  { path: 'brands', component: BrandsComponent, title:'Brands'},
+  { path: 'details/:id', component: ProductDetailsComponent, title:'Details'},
+  { path: 'brand/:id', component: BrandProductsComponent , title:'Brand'},
+  { path: 'category/:id', component: CategoryProductsComponent , title:'Category'},
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 
 ]

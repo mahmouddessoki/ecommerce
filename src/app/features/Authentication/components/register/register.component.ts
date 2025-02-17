@@ -1,18 +1,23 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms"
-import { AuthService } from '../../services/auth.service';
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Router, RouterLink } from '@angular/router';
+import { NavbarComponent } from "../../../../shared/components/navbar/navbar.component";
+import { ValidationHintComponent } from "../../../../shared/components/validation-hint/validation-hint.component";
+import { ValidationMessagesComponent } from "../../../../shared/components/validation-messages/validation-messages.component";
 import { globalValidator } from '../../../../shared/helpers/global-validators';
 import { passwordMisMatch } from '../../../../shared/helpers/password-match';
 import { RegisterUser } from '../../models/register-user';
-import { Router, RouterLink } from '@angular/router';
-import { InputComponent } from '../../../../shared/components/input/input.component';
+import { AuthService } from '../../services/auth.service';
 import { InvalidInputDirective } from '../../../../shared/directives/invalid-input.directive';
-import { ValidationMessagesComponent } from "../../../../shared/components/validation-messages/validation-messages.component";
-import { ValidationHintComponent } from "../../../../shared/components/validation-hint/validation-hint.component";
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink, ValidationMessagesComponent, ValidationHintComponent],
+  imports: [ReactiveFormsModule,
+    RouterLink,
+    ValidationMessagesComponent,
+    ValidationHintComponent,
+    NavbarComponent,
+    InvalidInputDirective],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -22,7 +27,7 @@ export class RegisterComponent {
   private readonly router = inject(Router)
   isLoading: boolean = false;
   resMsg!: string;
-  tooltip:boolean = false;
+  tooltip: boolean = false;
 
   authForm = this.fb.group({
     name: [null, globalValidator.nameValidate],
@@ -48,11 +53,15 @@ export class RegisterComponent {
         this.isLoading = false;
         this.router.navigate(['/login'])
       },
-      error: ({error}) => {
-        this.resMsg= error.message
+      error: ({ error }) => {
+        this.resMsg = error.message
         this.isLoading = false;
       }
     })
+  }
+
+  ngOnInit() {
+    this.authService.verifyLogin()
   }
 
 

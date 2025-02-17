@@ -43,7 +43,6 @@ export class BrandsSliderComponent implements OnInit {
     this.brandsService.getBrands(1).subscribe({
       next: ({ data }) => {
         this.brands = data.slice(0,9);
-        console.log(this.brands);
       }
     })
   }

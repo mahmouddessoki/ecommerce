@@ -27,7 +27,6 @@ export class HomeComponent {
           data.forEach((el:Category)=>{
             this.catIds.push(el._id);
           });
-          console.log(this.catIds);
         }
       })
     }

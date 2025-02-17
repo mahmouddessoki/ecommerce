@@ -1,19 +1,31 @@
-import { Directive, ElementRef, Input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Directive({
-  selector: '[appInvalidInput]'
+  selector: '[appInput]'
 })
 export class InvalidInputDirective {
-  @Input() touched!:boolean;
-  @Input() errors!:any;
-  @Input() dirty:boolean=false;
+  @Input() control!:AbstractControl
   constructor(private el:ElementRef) { }
 
+
+  @HostListener('blur') onBlur(){
+    if(this.control.invalid){
+      this.el.nativeElement.classList.add('invalid-input');
+    }
+  }
   ngAfterViewInit() {
-    // console.log(this.formCName , this.formG,this.placeholder , this.type);
-    console.log(this.dirty);
-    // if(this.)
+    this.control.valueChanges.subscribe({
+      next: (value) => {
+        if(this.control.errors){
+          this.el.nativeElement.classList.add('invalid-input');
+          this.el.nativeElement.classList.remove('valid-input');
+        }else {
+          this.el.nativeElement.classList.add('valid-input');
+          this.el.nativeElement.classList.remove('invalid-input');
+        }
+      }
+    })
 
   }
 

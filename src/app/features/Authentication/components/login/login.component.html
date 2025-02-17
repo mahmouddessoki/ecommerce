@@ -1,3 +1,7 @@
+
+
+<app-navbar />
+
 <section class="my-10">
   <div class="relative p-4 w-full max-w-xl max-h-full mx-auto">
     <!-- Modal content -->
@@ -22,24 +26,16 @@
           <div>
             @let emailControl = authForm.get('email')!;
 
-            <input [class]="{
-                          'invalid-input':emailControl?.errors &&
-                           (emailControl?.touched ||  emailControl?.dirty),
-                          'valid-input': !emailControl?.errors &&
-                          (emailControl?.touched || emailControl?.dirty)
-                        }" type="email" name="email" id="email" class="form-input"
+            <input appInput [control]="emailControl" type="email" name="email" id="email" class="form-input"
               placeholder="enter your email address" formControlName="email" />
           </div>
           <div>
 
-            @let passControl = authForm.get('password');
+            @let passControl = authForm.get('password')!;
 
-            <input [class]="{
-                          'invalid-input':passControl?.errors &&
-                           (passControl?.touched ||  passControl?.dirty),
-                          'valid-input': !passControl?.errors &&
-                          (passControl?.touched || passControl?.dirty)
-                        }" type="password" name="password" id="password" placeholder="enter your password"
+            <input appInput [control]="passControl"
+            type="password" name="password"
+            id="password" placeholder="enter your password"
               class="form-input" formControlName="password" />
           </div>
           <div class="flex justify-between">

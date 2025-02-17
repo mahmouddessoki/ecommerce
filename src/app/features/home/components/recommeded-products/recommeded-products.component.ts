@@ -18,7 +18,6 @@ export class RecommededProductsComponent implements OnInit {
     this.productsService.getRecommendedProducts().subscribe({
       next:({data})=>{
         this.recomendedProducts = data
-        console.log(this.recomendedProducts);
       }
     })
   }
