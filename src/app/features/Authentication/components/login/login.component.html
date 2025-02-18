@@ -11,7 +11,7 @@
         class="flex items-start overflow-hidden h-[200px]  justify-between p-2  rounded-t dark:border-gray-600 border-gray-200">
 
 
-        <img src="/imgs/auth.png" class="" alt="">
+        <img src="/imgs/auth.png" class="w-full" alt="">
 
         <!-- <img src="/imgs/auth.png" class="" alt=""> -->
 
@@ -47,7 +47,7 @@
               <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember
                 me</label>
             </div>
-            <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Forget Password?</a>
+            <a routerLink="/forgetPassword" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Forget Password?</a>
           </div>
           <button type="submit" class="form-btn">
             @if (!isLoading) {

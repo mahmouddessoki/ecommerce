@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
-import { AuthLayoutComponent } from './core/Layouts/auth-layout/auth-layout.component';
 import { UserLayoutComponent } from './core/Layouts/user-layout/user-layout.component';
-import { authRoutes } from './features/Authentication/auth.routing';
-import { homeRoutes } from './features/home/home.routing';
-import { authGuard } from './core/guards/auth.guard';
-import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
+import { ForgetPasswordComponent } from './features/Authentication/components/forget-password/forget-password.component';
 import { LoginComponent } from './features/Authentication/components/login/login.component';
 import { RegisterComponent } from './features/Authentication/components/register/register.component';
+import { ResetPasswordComponent } from './features/Authentication/components/reset-password/reset-password.component';
+import { homeRoutes } from './features/home/home.routing';
 
 export const routes: Routes = [
   {
@@ -15,6 +13,8 @@ export const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forgetPassword', component: ForgetPasswordComponent },
+  { path: 'resetPassword', component: ResetPasswordComponent },
 
 
 

@@ -90,4 +90,29 @@ export class AuthService {
     })
   }
 
+
+
+  forgetPasswordCode(email:string):Observable<any>{
+    console.log(email);
+    return this.httpClient.post(env.BASE_URL +"auth/forgotPasswords",{
+      email
+    })
+
+  }
+
+  verifyResetCode(resetCode:string):Observable<any>{
+    return this.httpClient.post(env.BASE_URL +"auth/verifyResetCode",{
+      resetCode
+    })
+  }
+
+  resetPassword(email:string, newPassword:string):Observable<any>{
+    return this.httpClient.post(env.BASE_URL + "auth/resetPassword", {
+      email,
+      newPassword
+    })
+  }
+
+
+
 }
