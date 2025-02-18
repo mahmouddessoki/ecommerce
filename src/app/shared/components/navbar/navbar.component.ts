@@ -1,6 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../features/Authentication/services/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +12,11 @@ import { AuthService } from '../../../features/Authentication/services/auth.serv
 export class NavbarComponent {
   @Input() layout!: string;
   private authService = inject(AuthService)
+  private cookie = inject(CookieService)
   isAuthenticated: boolean = false;
   ngOnInit() {
     this.verifyLogin()
+    console.log(this.cookie.get('token'));
 
   }
   verifyLogin() {

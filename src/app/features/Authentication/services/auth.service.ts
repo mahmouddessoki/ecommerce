@@ -6,6 +6,7 @@ import { RegisterUser } from '../models/register-user';
 import { LoginUser } from '../models/login-user';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ import { Router } from '@angular/router';
 export class AuthService {
   private readonly platform_id = inject(PLATFORM_ID)
   private readonly router = inject(Router)
+  private readonly cookie = inject(CookieService)
+
   constructor(private httpClient: HttpClient) { }
 
   register(user: RegisterUser): Observable<any> {
@@ -32,13 +35,16 @@ export class AuthService {
 
   saveToken(token: string) {
     if (this.checkPlatform()) {
-      localStorage.setItem('token', token)
+      // localStorage.setItem('token', token)
+      this.cookie.set('token', token)
     }
   }
 
   getToken(): string | null {
     if (this.checkPlatform()) {
-      return localStorage.getItem('token')
+      // return localStorage.getItem('token')
+     return this.cookie.get('token')
+
     }
     return null
   }
@@ -70,7 +76,9 @@ export class AuthService {
 
   logout(){
     if(this.checkPlatform()) {
-      localStorage.removeItem('token')
+      // localStorage.removeItem('token')
+      this.cookie.delete('token')
+
       // this.navigateToHome()
     }
   }
@@ -107,7 +115,7 @@ export class AuthService {
   }
 
   resetPassword(email:string, newPassword:string):Observable<any>{
-    return this.httpClient.post(env.BASE_URL + "auth/resetPassword", {
+    return this.httpClient.put(env.BASE_URL + "auth/resetPassword", {
       email,
       newPassword
     })

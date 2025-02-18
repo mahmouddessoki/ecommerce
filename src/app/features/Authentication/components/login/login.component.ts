@@ -18,7 +18,7 @@ export class LoginComponent {
   private readonly authService = inject(AuthService)
   authForm!: FormGroup;
   isLoading: boolean = false;
-  @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
+  // @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
 
 
   resMsg!: string;

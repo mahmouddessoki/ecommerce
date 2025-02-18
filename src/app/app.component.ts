@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NavbarComponent } from "./shared/components/navbar/navbar.component";
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +9,11 @@ import { NavbarComponent } from "./shared/components/navbar/navbar.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+    private readonly cookie = inject(CookieService)
+
+    ngOnInit() {
+      this.cookie.set('test',"ahmed")
+      console.log(this.cookie.get('test'));
+    }
+
 }

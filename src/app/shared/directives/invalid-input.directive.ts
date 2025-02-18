@@ -15,6 +15,7 @@ export class InvalidInputDirective {
     }
   }
   ngAfterViewInit() {
+    console.log(this.control);
     this.control.valueChanges.subscribe({
       next: (value) => {
         if(this.control.errors){

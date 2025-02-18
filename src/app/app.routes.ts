@@ -5,6 +5,7 @@ import { LoginComponent } from './features/Authentication/components/login/login
 import { RegisterComponent } from './features/Authentication/components/register/register.component';
 import { ResetPasswordComponent } from './features/Authentication/components/reset-password/reset-password.component';
 import { homeRoutes } from './features/home/home.routing';
+import { VerifyCodeComponent } from './features/Authentication/components/verify-code/verify-code.component';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'forgetPassword', component: ForgetPasswordComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
+  { path: 'verify', component: VerifyCodeComponent },
 
 
 
