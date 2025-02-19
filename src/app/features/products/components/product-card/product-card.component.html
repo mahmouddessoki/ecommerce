@@ -2,7 +2,7 @@
   <div id="product-img" class="bg-gray-200 rounded-md relative">
     <img [src]="product.imageCover" class="rounded-md" alt="{{product.title}}">
     <div class="icons *:group-hover:end-2 *:transition-all  ">
-      <span
+      <span (click)="onAddToCart()"
         class="absolute top-2 -end-full flex duration-400 items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
         <i class="fa-solid fa-cart-shopping  cursor-pointer "></i>
       </span>

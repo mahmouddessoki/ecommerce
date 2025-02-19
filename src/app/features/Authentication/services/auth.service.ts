@@ -43,7 +43,7 @@ export class AuthService {
   getToken(): string | null {
     if (this.checkPlatform()) {
       // return localStorage.getItem('token')
-     return this.cookie.get('token')
+      return this.cookie.get('token')
 
     }
     return null
@@ -51,8 +51,7 @@ export class AuthService {
 
 
   verifyToken(): Observable<any> {
-    console.log(this.getToken());
-    return this.httpClient.get(env.BASE_URL+'auth/verifyToken', {
+    return this.httpClient.get(env.BASE_URL + 'auth/verifyToken', {
       headers: {
         token: this.getToken()?.toString() || ''
       }
@@ -74,8 +73,8 @@ export class AuthService {
   }
 
 
-  logout(){
-    if(this.checkPlatform()) {
+  logout() {
+    if (this.checkPlatform()) {
       // localStorage.removeItem('token')
       this.cookie.delete('token')
 
@@ -92,29 +91,26 @@ export class AuthService {
           this.navigateToHome()
         }
       },
-      error: (err) => {
-        console.log(err);
-      }
+
     })
   }
 
 
 
-  forgetPasswordCode(email:string):Observable<any>{
-    console.log(email);
-    return this.httpClient.post(env.BASE_URL +"auth/forgotPasswords",{
+  forgetPasswordCode(email: string): Observable<any> {
+    return this.httpClient.post(env.BASE_URL + "auth/forgotPasswords", {
       email
     })
 
   }
 
-  verifyResetCode(resetCode:string):Observable<any>{
-    return this.httpClient.post(env.BASE_URL +"auth/verifyResetCode",{
+  verifyResetCode(resetCode: string): Observable<any> {
+    return this.httpClient.post(env.BASE_URL + "auth/verifyResetCode", {
       resetCode
     })
   }
 
-  resetPassword(email:string, newPassword:string):Observable<any>{
+  resetPassword(email: string, newPassword: string): Observable<any> {
     return this.httpClient.put(env.BASE_URL + "auth/resetPassword", {
       email,
       newPassword

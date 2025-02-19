@@ -4,6 +4,9 @@ import { Iproduct } from '../../../products/models/iproduct';
 import { ProductCardComponent } from "../../../products/components/product-card/product-card.component";
 import { PaginationComponent } from "../../../../shared/components/pagination/pagination.component";
 import { ProductsService } from '../../services/products.service';
+import { CartService } from '../../../cart/services/cart.service';
+import { addToCart } from '../../../../shared/helpers/operations';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'category-products',
@@ -14,6 +17,9 @@ import { ProductsService } from '../../services/products.service';
 export class CategoryProductsComponent {
   private readonly activatedRoute = inject(ActivatedRoute)
   private readonly productsService = inject(ProductsService)
+  private readonly cartService = inject(CartService)
+  private readonly toaster = inject(ToastrService)
+
   catId!: string | null
   catProds: Iproduct[] = [];
   totalPages!: number;
@@ -46,6 +52,10 @@ export class CategoryProductsComponent {
 
   ngOnInit(): void {
     this.getCatId();
+  }
+
+  addProductToCart(id: string) {
+    addToCart(id, this.cartService, this.toaster)
   }
 
 

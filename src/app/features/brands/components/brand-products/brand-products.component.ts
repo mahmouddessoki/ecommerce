@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Iproduct } from '../../../products/models/iproduct';
 import { ProductsService } from '../../../products/services/products.service';
 import { ProductCardComponent } from "../../../products/components/product-card/product-card.component";
+import { ToastrService } from 'ngx-toastr';
+import { addToCart } from '../../../../shared/helpers/operations';
+import { CartService } from '../../../cart/services/cart.service';
 
 @Component({
   selector: 'app-brand-products',
@@ -14,7 +17,9 @@ import { ProductCardComponent } from "../../../products/components/product-card/
 export class BrandProductsComponent {
 
   private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly cartService = inject(CartService)
   private readonly productsService = inject(ProductsService)
+  private readonly toaster = inject(ToastrService)
   brandId!: string | null
   brandProds: Iproduct[] = [];
   totalPages!: number;
@@ -44,6 +49,12 @@ export class BrandProductsComponent {
     this.currentPage = e
     this.getBrandProds()
   }
+
+  addProductToCart(id:string) {
+    addToCart(id,this.cartService,this.toaster)
+  }
+
+
 
   ngOnInit(): void {
     this.getBrandId();

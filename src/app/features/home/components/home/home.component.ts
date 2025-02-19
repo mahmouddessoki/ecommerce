@@ -9,6 +9,7 @@ import { HomeProductsComponent } from "../home-products/home-products.component"
 import { CategoriesService } from '../../../categories/services/categories.service';
 import { Category } from '../../../categories/models/category';
 import { SpecificCategoryProductsComponent } from '../../../products/components/specific-category-products/specific-category-products.component';
+import { CartService } from '../../../cart/services/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +31,10 @@ export class HomeComponent {
         }
       })
     }
+
+
+
+
 
 
 

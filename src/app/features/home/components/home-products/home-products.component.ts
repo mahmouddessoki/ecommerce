@@ -4,6 +4,9 @@ import { ProductsService } from '../../../products/services/products.service';
 import { BrandCardComponent } from "../../../brands/components/brand-card/brand-card.component";
 import { ProductCardComponent } from "../../../products/components/product-card/product-card.component";
 import { RouterLink } from '@angular/router';
+import { CartService } from '../../../cart/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
+import { addToCart } from '../../../../shared/helpers/operations';
 
 @Component({
   selector: 'app-home-products',
@@ -14,6 +17,8 @@ import { RouterLink } from '@angular/router';
 export class HomeProductsComponent {
   Products: Iproduct[] = []
   private readonly productsService = inject(ProductsService)
+  private readonly cartService = inject(CartService)
+  private readonly toaster = inject(ToastrService)
 
   getProducts() {
     this.productsService.getAllProducts(1).subscribe({
@@ -22,6 +27,10 @@ export class HomeProductsComponent {
         // console.log(this.Products);
       }
     })
+  }
+
+  addProductToCart(id:string){
+    addToCart(id,this.cartService,this.toaster)
   }
 
   ngOnInit(): void {
