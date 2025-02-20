@@ -18,7 +18,7 @@ export class InvalidInputDirective {
     console.log(this.control);
     this.control.valueChanges.subscribe({
       next: (value) => {
-        if(this.control.errors){
+        if(this.control.errors && (this.control.touched||this.control.dirty)){
           this.el.nativeElement.classList.add('invalid-input');
           this.el.nativeElement.classList.remove('valid-input');
         }else {

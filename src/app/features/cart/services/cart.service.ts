@@ -22,8 +22,8 @@ export class CartService {
     })
   }
 
-  updateProductQuantity(productId: string, count: number) {
-    this.http.put(env.BASE_URL + `cart/${productId}`, {
+  updateProductQuantity(productId: string, count: number):Observable<any> {
+    return this.http.put(env.BASE_URL + `cart/${productId}`, {
       count
     }, {
       headers: {
@@ -39,8 +39,15 @@ export class CartService {
       }
     })
   }
-  clearCart() {
-    this.http.delete(env.BASE_URL + 'cart', {
+  removeCartItem(id:string):Observable<any>  {
+   return this.http.delete(env.BASE_URL + `cart/${id}`, {
+      headers: {
+        token: this.authService.getToken()!
+      }
+    })
+  }
+  clearCart():Observable<any>  {
+    return this.http.delete(env.BASE_URL + 'cart', {
       headers: {
         token: this.authService.getToken()!
       }

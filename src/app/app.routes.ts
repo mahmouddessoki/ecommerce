@@ -6,6 +6,7 @@ import { RegisterComponent } from './features/Authentication/components/register
 import { ResetPasswordComponent } from './features/Authentication/components/reset-password/reset-password.component';
 import { homeRoutes } from './features/home/home.routing';
 import { VerifyCodeComponent } from './features/Authentication/components/verify-code/verify-code.component';
+import { CheckoutComponent } from './features/Order/components/checkout/checkout.component';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'forgetPassword', component: ForgetPasswordComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'verify', component: VerifyCodeComponent },
+  { path: 'checkout/:id', component: CheckoutComponent },
 
 
 
