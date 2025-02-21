@@ -9,31 +9,26 @@ import { AuthService } from '../../../features/Authentication/services/auth.serv
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  @Input() layout!: string;
   private authService = inject(AuthService)
-  isAuthenticated: boolean = false;
-  ngOnInit() {
-    this.verifyLogin()
+  isAuthenticated!: boolean;
 
-  }
-  verifyLogin() {
-
-    this.authService.verifyToken().subscribe({
-      next: (res) => {
-        this.isAuthenticated = true;
-      },
-      error: (err) => {
-        this.isAuthenticated = false;
-
+  isAuth() {
+    this.authService.isLoggedIn.subscribe({
+      next: (value) => {
+        this.isAuthenticated = value
       }
-    })
+    });
   }
+  ngOnInit() {
+    this.isAuth()
+  }
+
 
 
 
   logout() {
     this.authService.logout()
-    this.isAuthenticated = false;
+    this.authService.isLoggedIn.next(false)
   }
 
 

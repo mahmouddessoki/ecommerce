@@ -15,42 +15,22 @@ export class CartService {
   addProduct(productId: string):Observable<any> {
     return this.http.post(env.BASE_URL + 'cart', {
       productId
-    }, {
-      headers: {
-        token: this.authService.getToken()!
-      }
     })
   }
 
   updateProductQuantity(productId: string, count: number):Observable<any> {
     return this.http.put(env.BASE_URL + `cart/${productId}`, {
       count
-    }, {
-      headers: {
-        token: this.authService.getToken()!
-      }
     })
   }
 
   getUserCart():Observable<any>  {
-   return this.http.get(env.BASE_URL + 'cart', {
-      headers: {
-        token: this.authService.getToken()!
-      }
-    })
+   return this.http.get(env.BASE_URL + 'cart')
   }
   removeCartItem(id:string):Observable<any>  {
-   return this.http.delete(env.BASE_URL + `cart/${id}`, {
-      headers: {
-        token: this.authService.getToken()!
-      }
-    })
+   return this.http.delete(env.BASE_URL + `cart/${id}`)
   }
   clearCart():Observable<any>  {
-    return this.http.delete(env.BASE_URL + 'cart', {
-      headers: {
-        token: this.authService.getToken()!
-      }
-    })
+    return this.http.delete(env.BASE_URL + 'cart')
   }
 }

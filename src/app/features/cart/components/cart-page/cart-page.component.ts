@@ -1,22 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FeatureRedirectService } from '../../../../core/services/feature-redirect.service';
 import { Cart } from '../../models/cart.interfaces';
 import { CartService } from '../../services/cart.service';
 import { CartItemComponent } from "../cart-item/cart-item.component";
+import { redirectToLogin } from '../../../../shared/helpers/redirect';
+import { AuthService } from '../../../Authentication/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart-page',
-  imports: [CartItemComponent,RouterLink],
+  imports: [CartItemComponent, RouterLink],
   templateUrl: './cart-page.component.html',
   styleUrl: './cart-page.component.css'
 })
 export class CartPageComponent {
-  private readonly featureRedirectService = inject(FeatureRedirectService)
   private readonly cartService = inject(CartService)
+  private readonly auth = inject(AuthService)
   cartItems: Cart = {} as Cart
+  sub!: Subscription
   ngOnInit() {
-    this.featureRedirectService.verifyLogin()
+    this.sub = redirectToLogin(this.auth)
     this.getUserCart()
   }
 
@@ -26,10 +29,9 @@ export class CartPageComponent {
     this.cartService.getUserCart().subscribe({
       next: (res) => {
         this.cartItems = res;
-        console.log(this.cartItems);
       },
       error: (err) => {
-        console.log(err)
+        // console.log(err)
       }
     })
 
@@ -38,25 +40,25 @@ export class CartPageComponent {
   }
 
   removeItem(itemId: string) {
-  this.cartService.removeCartItem(itemId).subscribe({
-    next: (res) => {
-      this.cartItems=res
-    },
-    error: (err) => {
-      console.log(err)
-    }
-  })
-  }
-
-  updateQty(e: { productId: string; count: number; }){
-    this.cartService.updateProductQuantity(e.productId,e.count).subscribe({
+    this.cartService.removeCartItem(itemId).subscribe({
       next: (res) => {
-        this.cartItems=res
+        this.cartItems = res
+      },
+      error: (err) => {
+        console.log(err)
       }
     })
   }
 
-  clearCart(){
+  updateQty(e: { productId: string; count: number; }) {
+    this.cartService.updateProductQuantity(e.productId, e.count).subscribe({
+      next: (res) => {
+        this.cartItems = res
+      }
+    })
+  }
+
+  clearCart() {
     this.cartService.clearCart().subscribe({
       next: (res) => {
         if (res.message == "success") {
@@ -64,6 +66,10 @@ export class CartPageComponent {
         }
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe()
   }
 
 }

@@ -13,7 +13,7 @@ import { CartService } from '../../../cart/services/cart.service';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterOutlet, MainSliderComponent, CategoriesSliderComponent, RecommededProductsComponent, BrandsSliderComponent, HomeProductsComponent, SpecificCategoryProductsComponent],
+  imports: [ MainSliderComponent, CategoriesSliderComponent, RecommededProductsComponent, BrandsSliderComponent, HomeProductsComponent, SpecificCategoryProductsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -31,12 +31,6 @@ export class HomeComponent {
         }
       })
     }
-
-
-
-
-
-
 
     ngOnInit(): void {
       this.getCategoriesIds();

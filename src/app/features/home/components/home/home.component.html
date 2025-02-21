@@ -3,10 +3,9 @@
 <app-recommeded-products />
 <app-brands-slider />
 <app-home-products />
-
 @for (catId of catIds; track catId) {
   <specific-category-products [catId]="catId" />
 }
-<router-outlet />
+<!-- <router-outlet /> -->
 
 

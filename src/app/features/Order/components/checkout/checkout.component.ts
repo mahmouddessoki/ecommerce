@@ -1,24 +1,25 @@
 import { Component, inject } from '@angular/core';
-import { NavbarComponent } from "../../../../shared/components/navbar/navbar.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginUser } from '../../../Authentication/models/login-user';
-import { OrderService } from '../../services/order.service';
 import { ActivatedRoute } from '@angular/router';
 import { InvalidInputDirective } from '../../../../shared/directives/invalid-input.directive';
+import { redirectToLogin } from '../../../../shared/helpers/redirect';
+import { AuthService } from '../../../Authentication/services/auth.service';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-checkout',
-  imports: [NavbarComponent,ReactiveFormsModule,InvalidInputDirective],
+  imports: [ReactiveFormsModule, InvalidInputDirective],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css'
 })
 export class CheckoutComponent {
-private readonly fb = inject(FormBuilder)
+  private readonly fb = inject(FormBuilder)
+  private readonly auth = inject(AuthService)
   private readonly orderService = inject(OrderService)
   private readonly router = inject(ActivatedRoute)
   checkoutForm!: FormGroup;
   isLoading: boolean = false;
-  cartId:string=''
+  cartId: string = ''
   // @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
 
 
@@ -26,16 +27,16 @@ private readonly fb = inject(FormBuilder)
 
   createForm() {
     this.checkoutForm = this.fb.group({
-      city: [null,Validators.required],
-      phone: [null, Validators.required ],
+      city: [null, Validators.required],
+      phone: [null, Validators.required],
       details: [null, Validators.required],
 
     })
   }
 
-  getCartId(){
+  getCartId() {
     this.router.paramMap.subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.cartId = res.get('id')!
 
       }
@@ -44,8 +45,9 @@ private readonly fb = inject(FormBuilder)
   ngOnInit() {
 
     // this.orderService.verifyLogin()
+    redirectToLogin(this.auth)
 
-   this.createForm()
+    this.createForm()
     this.getCartId()
   }
   checkout() {
@@ -56,12 +58,12 @@ private readonly fb = inject(FormBuilder)
     }
 
     this.isLoading = true;
-    this.orderService.createCheckout(this.cartId,this.checkoutForm.value).subscribe({
+    this.orderService.createCheckout(this.cartId, this.checkoutForm.value).subscribe({
       next: (res) => {
         console.log(res);
         this.isLoading = false;
 
-        window.open(res.session.url , '_blank')
+        window.open(res.session.url, '_blank')
 
       },
       error: ({ error }) => {

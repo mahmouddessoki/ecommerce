@@ -7,10 +7,11 @@ import { RouterLink } from '@angular/router';
 import { CartService } from '../../../cart/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { addToCart } from '../../../../shared/helpers/operations';
+import { AuthService } from '../../../Authentication/services/auth.service';
 
 @Component({
   selector: 'app-home-products',
-  imports: [ProductCardComponent,RouterLink],
+  imports: [ProductCardComponent, RouterLink],
   templateUrl: './home-products.component.html',
   styleUrl: './home-products.component.css'
 })
@@ -19,6 +20,8 @@ export class HomeProductsComponent {
   private readonly productsService = inject(ProductsService)
   private readonly cartService = inject(CartService)
   private readonly toaster = inject(ToastrService)
+  private readonly auth = inject(AuthService)
+  sub: any;
 
   getProducts() {
     this.productsService.getAllProducts(1).subscribe({
@@ -29,8 +32,23 @@ export class HomeProductsComponent {
     })
   }
 
-  addProductToCart(id:string){
-    addToCart(id,this.cartService,this.toaster)
+  addProductToCart(id: string) {
+    this.auth.verifyToken().subscribe({
+      next: (res) => {
+        this.sub = addToCart(id, this.toaster, this.cartService)
+      },
+      error: (err) => {
+        this.toaster.warning('Please login to add products to cart')
+
+      }
+    })
+
+
+  }
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   ngOnInit(): void {

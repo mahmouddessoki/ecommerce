@@ -6,10 +6,12 @@ import { LoginUser } from '../../models/login-user';
 import { RouterLink } from '@angular/router';
 import { NavbarComponent } from "../../../../shared/components/navbar/navbar.component";
 import { InvalidInputDirective } from '../../../../shared/directives/invalid-input.directive';
+import { map, Subscription } from 'rxjs';
+import { redirectToHome } from '../../../../shared/helpers/redirect';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink, NavbarComponent, InvalidInputDirective],
+  imports: [ReactiveFormsModule, RouterLink, InvalidInputDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,29 +21,22 @@ export class LoginComponent {
   authForm!: FormGroup;
   isLoading: boolean = false;
   // @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
-
-
+  sub!: Subscription
   resMsg!: string;
 
-
-  ngOnInit() {
-
-    this.authService.verifyLogin()
-
+  createForm() {
     this.authForm = this.fb.group({
       email: [null, globalValidator.emailValidate],
       password: [null, globalValidator.passwordValidate],
 
     })
+  }
 
 
 
-
-
-
-
-
-
+  ngOnInit() {
+    this.sub = redirectToHome(this.authService)
+    this.createForm()
 
 
   }
@@ -58,6 +53,7 @@ export class LoginComponent {
         console.log(res);
         this.isLoading = false;
         this.authService.saveToken(res.token)
+        this.authService.isLoggedIn.next(true);
         this.authService.navigateToHome()
       },
       error: ({ error }) => {
@@ -66,6 +62,10 @@ export class LoginComponent {
       }
     })
 
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe()
   }
 
 

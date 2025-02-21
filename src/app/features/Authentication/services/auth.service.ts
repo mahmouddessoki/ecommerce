@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { env } from '../../../../environments/environments';
 import { RegisterUser } from '../models/register-user';
 import { LoginUser } from '../models/login-user';
@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class AuthService {
+  isLoggedIn = new BehaviorSubject<boolean>(false)
   private readonly platform_id = inject(PLATFORM_ID)
   private readonly router = inject(Router)
   private readonly cookie = inject(CookieService)
@@ -42,9 +43,7 @@ export class AuthService {
 
   getToken(): string | null {
     if (this.checkPlatform()) {
-      // return localStorage.getItem('token')
       return this.cookie.get('token')
-
     }
     return null
   }
@@ -55,9 +54,8 @@ export class AuthService {
       headers: {
         token: this.getToken()?.toString() || ''
       }
-    })
+    });
   }
-
 
   isAuthenticated(): boolean {
 
@@ -75,10 +73,7 @@ export class AuthService {
 
   logout() {
     if (this.checkPlatform()) {
-      // localStorage.removeItem('token')
-      this.cookie.delete('token')
-
-      // this.navigateToHome()
+      this.cookie.deleteAll('token')
     }
   }
 
@@ -87,7 +82,6 @@ export class AuthService {
       next: (res) => {
         // this.authService.navigateToHome()
         if (res.message === 'verified') {
-
           this.navigateToHome()
         }
       },

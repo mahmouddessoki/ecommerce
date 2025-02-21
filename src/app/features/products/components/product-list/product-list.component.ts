@@ -6,6 +6,7 @@ import { PaginationComponent } from "../../../../shared/components/pagination/pa
 import { CartService } from '../../../cart/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { addToCart } from '../../../../shared/helpers/operations';
+import { AuthService } from '../../../Authentication/services/auth.service';
 
 @Component({
   selector: 'app-product-list',
@@ -17,8 +18,9 @@ export class ProductListComponent {
 
   private readonly productsService = inject(ProductsService)
   private readonly cartService = inject(CartService)
+  private readonly auth = inject(AuthService)
   private readonly toaster = inject(ToastrService)
-
+  sub:any
   products: Iproduct[] = []
   currentPage: number = 1;
   totalPages!: number;
@@ -31,7 +33,14 @@ export class ProductListComponent {
     })
   }
   addProductToCart(id: string) {
-    addToCart(id,this.cartService,this.toaster)
+    this.auth.isLoggedIn.subscribe({
+      next: (isLoggedIn) => {
+        if (isLoggedIn) {
+         this.sub =  addToCart(id, this.toaster, this.cartService)
+
+        }
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -48,6 +57,12 @@ export class ProductListComponent {
   getPage(e: number) {
     this.currentPage = e
     this.getProducts()
+  }
+
+  ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe()
+    }
   }
 
 }

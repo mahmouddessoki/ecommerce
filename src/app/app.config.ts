@@ -4,9 +4,12 @@ import { provideRouter, withHashLocation, withInMemoryScrolling, withViewTransit
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { provideToastr } from 'ngx-toastr';
+import { addTokenInterceptor } from './core/interceptors/add-token.interceptor';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
@@ -15,8 +18,8 @@ export const appConfig: ApplicationConfig = {
       scrollPositionRestoration: "enabled"
     }), withViewTransitions()),
   provideClientHydration(withEventReplay())
-    , provideHttpClient(withFetch())
-    , importProvidersFrom(BrowserAnimationsModule),
+    , provideHttpClient(withFetch(), withInterceptors([addTokenInterceptor,loadingInterceptor]))
+    , importProvidersFrom(BrowserAnimationsModule, NgxSpinnerModule),
     CookieService,
   provideToastr(), // Toastr providers
 

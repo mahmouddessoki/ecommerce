@@ -7,6 +7,7 @@ import { ProductsService } from '../../services/products.service';
 import { CartService } from '../../../cart/services/cart.service';
 import { addToCart } from '../../../../shared/helpers/operations';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../Authentication/services/auth.service';
 
 @Component({
   selector: 'category-products',
@@ -25,6 +26,8 @@ export class CategoryProductsComponent {
   totalPages!: number;
   currentPage: number = 1
   catName!: string
+  auth = inject(AuthService);
+  sub: any;
   getCatId() {
     this.activatedRoute.paramMap.subscribe({
       next: (res) => {
@@ -55,7 +58,21 @@ export class CategoryProductsComponent {
   }
 
   addProductToCart(id: string) {
-    addToCart(id, this.cartService, this.toaster)
+    this.auth.verifyToken().subscribe({
+      next: (res) => {
+        this.sub = addToCart(id, this.toaster, this.cartService)
+      },
+      error: (err) => {
+        this.toaster.warning('Please login to add products to cart')
+
+      }
+    })
+
+  }
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
 

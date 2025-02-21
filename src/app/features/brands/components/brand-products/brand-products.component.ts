@@ -7,6 +7,7 @@ import { ProductCardComponent } from "../../../products/components/product-card/
 import { ToastrService } from 'ngx-toastr';
 import { addToCart } from '../../../../shared/helpers/operations';
 import { CartService } from '../../../cart/services/cart.service';
+import { AuthService } from '../../../Authentication/services/auth.service';
 
 @Component({
   selector: 'app-brand-products',
@@ -20,11 +21,13 @@ export class BrandProductsComponent {
   private readonly cartService = inject(CartService)
   private readonly productsService = inject(ProductsService)
   private readonly toaster = inject(ToastrService)
+  private readonly auth = inject(AuthService)
   brandId!: string | null
   brandProds: Iproduct[] = [];
   totalPages!: number;
   currentPage: number = 1
   brandName!: string
+  sub: any;
   getBrandId() {
     this.activatedRoute.paramMap.subscribe({
       next: (res) => {
@@ -50,8 +53,18 @@ export class BrandProductsComponent {
     this.getBrandProds()
   }
 
-  addProductToCart(id:string) {
-    addToCart(id,this.cartService,this.toaster)
+  addProductToCart(id: string) {
+    this.auth.verifyToken().subscribe({
+      next: (res) => {
+        this.sub = addToCart(id, this.toaster, this.cartService)
+      },
+      error: (err) => {
+        this.toaster.warning('Please login to add products to cart')
+
+      }
+    })
+
+
   }
 
 
@@ -61,6 +74,10 @@ export class BrandProductsComponent {
   }
 
 
-
+  ngOnDestroy(): void {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
 
 }

@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FeatureRedirectService } from '../../../../core/services/feature-redirect.service';
+import { redirectToLogin } from '../../../../shared/helpers/redirect';
+import { AuthService } from '../../../Authentication/services/auth.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -8,9 +9,10 @@ import { FeatureRedirectService } from '../../../../core/services/feature-redire
   styleUrl: './wishlist.component.css'
 })
 export class WishlistComponent {
-  private readonly featureRedirectService = inject(FeatureRedirectService)
+  private readonly auth = inject(AuthService)
     ngOnInit() {
-      this.featureRedirectService.verifyLogin()
+         redirectToLogin(this.auth)
+
     }
 
 }

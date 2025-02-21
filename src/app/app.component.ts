@@ -1,19 +1,27 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerComponent, NgxSpinnerService } from "ngx-spinner";
+import { NavbarComponent } from "./shared/components/navbar/navbar.component";
+import { AuthService } from './features/Authentication/services/auth.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NgxSpinnerComponent, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-    private readonly cookie = inject(CookieService)
+  constructor(private spinner: NgxSpinnerService) { }
+  private readonly auth = inject(AuthService)
 
-    ngOnInit() {
-      this.cookie.set('test',"ahmed")
-      console.log(this.cookie.get('test'));
-    }
-
+  ngOnInit() {
+    this.auth.verifyToken().subscribe({
+      next: () => {
+        this.auth.isLoggedIn.next(true)
+      },
+      error: () => {
+        this.auth.isLoggedIn.next(false)
+      }
+    })
+  }
 }

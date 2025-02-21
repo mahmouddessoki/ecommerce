@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from "../../../../shared/components/navbar/navbar.component";
 import { ValidationHintComponent } from "../../../../shared/components/validation-hint/validation-hint.component";
@@ -9,6 +9,7 @@ import { passwordMisMatch } from '../../../../shared/helpers/password-match';
 import { RegisterUser } from '../../models/register-user';
 import { AuthService } from '../../services/auth.service';
 import { InvalidInputDirective } from '../../../../shared/directives/invalid-input.directive';
+import { redirectToHome } from '../../../../shared/helpers/redirect';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,6 @@ import { InvalidInputDirective } from '../../../../shared/directives/invalid-inp
     RouterLink,
     ValidationMessagesComponent,
     ValidationHintComponent,
-    NavbarComponent,
     InvalidInputDirective],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -28,14 +28,18 @@ export class RegisterComponent {
   isLoading: boolean = false;
   resMsg!: string;
   tooltip: boolean = false;
+  authForm!: FormGroup
 
-  authForm = this.fb.group({
-    name: [null, globalValidator.nameValidate],
-    email: [null, globalValidator.emailValidate],
-    password: [null, globalValidator.passwordValidate],
-    rePassword: ['', Validators.required]
-  }, { validators: [passwordMisMatch] })
 
+  createForm() {
+    this.authForm = this.fb.group({
+      name: [null, globalValidator.nameValidate],
+      email: [null, globalValidator.emailValidate],
+      password: [null, globalValidator.passwordValidate],
+      rePassword: ['', Validators.required]
+    }, { validators: [passwordMisMatch] })
+
+  }
 
 
   register() {
@@ -61,7 +65,8 @@ export class RegisterComponent {
   }
 
   ngOnInit() {
-    this.authService.verifyLogin()
+    redirectToHome(this.authService)
+    this.createForm()
   }
 
 

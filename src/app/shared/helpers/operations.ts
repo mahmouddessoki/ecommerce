@@ -1,20 +1,27 @@
 import { ToastrService } from "ngx-toastr";
 import { CartService } from "../../features/cart/services/cart.service";
 import { showToaster } from "./toaster";
+import { inject } from "@angular/core";
+import { AuthService } from "../../features/Authentication/services/auth.service";
 
 export const addToCart = (id: string,
-  cartService: CartService,
-  toaster: ToastrService) => {
+  toaster: ToastrService,
+  cartService: CartService): any => {
 
-  let subscription = cartService.addProduct(id).subscribe({
+
+  return cartService.addProduct(id).subscribe({
     next: (res: any) => {
-      showToaster(res.message, toaster)
-      subscription.unsubscribe()
+      showToaster("Product Added Successfully To Cart", toaster)
     },
     error: (err: any) => {
-      console.error(err);
-      subscription.unsubscribe()
+      // console.error(err);
 
     }
   })
+
+
 }
+
+
+
+
