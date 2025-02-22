@@ -14,15 +14,32 @@ export const routes: Routes = [
     path: '', component: UserLayoutComponent
     , children: homeRoutes
   },
-  { path: 'login', component: LoginComponent,title:'Login' },
+  { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'register', component: RegisterComponent, title: 'Register' },
-  { path: 'forgetPassword', component: ForgetPasswordComponent, title: 'Forget Password'},
-  { path: 'resetPassword', component: ResetPasswordComponent,title: 'Reset Password'},
-  { path: 'verify', component: VerifyCodeComponent, title: 'Verify Code'},
-  { path: 'checkout/:id', component: CheckoutComponent, title: 'Checkout'},
+  {
+    path: 'forgetPassword',
+    loadComponent: () => import('./features/Authentication/components/forget-password/forget-password.component').then(c => ForgetPasswordComponent),
+    component: ForgetPasswordComponent,
+    title: 'Forget Password'
+  },
+  {
+    path: 'resetPassword',
+    loadComponent: () => import('./features/Authentication/components/reset-password/reset-password.component').then(c => ResetPasswordComponent),
+
+    component: ResetPasswordComponent,
+    title: 'Reset Password'
+  },
+  {
+    path: 'verify',
+    loadComponent: () => import('./features/Authentication/components/verify-code/verify-code.component').then(c => VerifyCodeComponent),
+
+    component: VerifyCodeComponent,
+    title: 'Verify Code'
+  },
+  { path: 'checkout/:id', component: CheckoutComponent, title: 'Checkout' },
   {
     path: '**',
-    component:NotFoundComponent
+    component: NotFoundComponent
   }
 
 
