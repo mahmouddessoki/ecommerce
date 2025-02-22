@@ -13,12 +13,12 @@ export const routes: Routes = [
     path: '', component: UserLayoutComponent
     , children: homeRoutes
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'forgetPassword', component: ForgetPasswordComponent },
-  { path: 'resetPassword', component: ResetPasswordComponent },
-  { path: 'verify', component: VerifyCodeComponent },
-  { path: 'checkout/:id', component: CheckoutComponent },
+  { path: 'login', component: LoginComponent,title:'Login' },
+  { path: 'register', component: RegisterComponent, title: 'Register' },
+  { path: 'forgetPassword', component: ForgetPasswordComponent, title: 'Forget Password'},
+  { path: 'resetPassword', component: ResetPasswordComponent,title: 'Reset Password'},
+  { path: 'verify', component: VerifyCodeComponent, title: 'Verify Code'},
+  { path: 'checkout/:id', component: CheckoutComponent, title: 'Checkout'},
 
 
 
