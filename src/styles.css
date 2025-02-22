@@ -24,7 +24,7 @@
 
 @layer components {
   .nav-link {
-    @apply text-lg text-gray-400 uppercase font-medium transition-all duration-200 hover:text-rating
+    @apply text-lg text-gray-400 uppercase font-medium transition-all duration-200 hover:text-rating mx-3
   }
   .drop-item {
     @apply flex items-center gap-x-2 text-[17px] px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white
