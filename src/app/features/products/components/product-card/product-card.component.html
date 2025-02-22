@@ -3,16 +3,16 @@
     <img [src]="product.imageCover" class="rounded-md" alt="{{product.title}}">
     <div class="icons *:group-hover:end-2 *:transition-all  ">
       <span (click)="onAddToCart()"
-        class="absolute top-2 -end-full flex duration-400 items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
-        <i class="fa-solid fa-cart-shopping  cursor-pointer "></i>
+        class="absolute top-2 -end-full hover:bg-nav hover:*:text-white flex duration-400 items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
+        <i class="fa-solid fa-cart-plus text-black  cursor-pointer "></i>
       </span>
       <span (click)="onAddToWish()"
-        class="absolute bottom-2 -end-full cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
-        <i class="fa-regular fa-heart"></i>
+        class="absolute bottom-2 -end-full hover:bg-nav hover:*:text-white  cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
+        <i class="fa-regular fa-heart text-black  cursor-pointer"></i>
       </span>
       <span [routerLink]="['/details',product._id]"
-        class="absolute  top-2 -start-full group-hover:start-2 cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
-        <i class="fa-solid fa-eye"></i>
+        class="absolute  top-2 -start-full hover:bg-nav hover:*:text-white  group-hover:start-2 cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
+        <i class="fa-solid fa-eye text-black"></i>
       </span>
 
 
@@ -26,7 +26,7 @@
 
   <div class="flex justify-between">
     <span>
-      EGP {{product.price}}
+       {{product.price | currency:'GBP'}}
     </span>
     <span class="flex gap-1 bg-white  text-sm  rounded-full items-center ">{{product.ratingsAverage}}<i
         class="fa-solid fa-star text-rating "></i></span>

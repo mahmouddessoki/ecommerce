@@ -1,26 +1,50 @@
 import { Component, inject, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../features/Authentication/services/auth.service';
+import { CartService } from '../../../features/cart/services/cart.service';
+import { WishlistService } from '../../../features/wishlist/services/wishlist.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink,RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   private authService = inject(AuthService)
+  private cartService = inject(CartService)
+  private wishService = inject(WishlistService)
   isAuthenticated!: boolean;
+  cartItemsCount!: number;
+  wishItemsCount!: number;
 
-  isAuth() {  
+  isAuth() {
     this.authService.isLoggedIn.subscribe({
       next: (value) => {
         this.isAuthenticated = value
+        // this.getUserCart()
+
       }
     });
   }
+
   ngOnInit() {
     this.isAuth()
+    this.cartService.cartCount.subscribe({
+      next: (value) => {
+        this.cartItemsCount = value
+      }
+    })
+    this.wishService.wishCount.subscribe({
+      next: (value) => {
+        this.wishItemsCount = value
+      }
+    })
+
+    // this.getUserCart()
+
+
+
   }
 
 

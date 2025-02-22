@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Iproduct } from '../../models/iproduct';
 import { RouterLink } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-card',
-  imports: [RouterLink],
+  imports: [RouterLink,CurrencyPipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css'
 })

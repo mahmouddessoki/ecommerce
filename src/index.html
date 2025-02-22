@@ -1,17 +1,63 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>EcommerceApp</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="/imgs/favicon-32x32 (1).png">
+  <link rel="icon" type="image/x-icon" href="/imgs/freshcart-logo.svg">
   <style>
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
   </style>
 </head>
+
 <body class="font-main">
   <app-root></app-root>
+
+
+  <script>
+    // Burger menus
+    document.addEventListener('DOMContentLoaded', function () {
+      // open
+      const burger = document.querySelectorAll('.navbar-burger');
+      const menu = document.querySelectorAll('.navbar-menu');
+
+      if (burger.length && menu.length) {
+        for (var i = 0; i < burger.length; i++) {
+          burger[i].addEventListener('click', function () {
+            for (var j = 0; j < menu.length; j++) {
+              menu[j].classList.toggle('hidden');
+            }
+          });
+        }
+      }
+
+      // close
+      const close = document.querySelectorAll('.navbar-close');
+      const backdrop = document.querySelectorAll('.navbar-backdrop');
+
+      if (close.length) {
+        for (var i = 0; i < close.length; i++) {
+          close[i].addEventListener('click', function () {
+            for (var j = 0; j < menu.length; j++) {
+              menu[j].classList.toggle('hidden');
+            }
+          });
+        }
+      }
+
+      if (backdrop.length) {
+        for (var i = 0; i < backdrop.length; i++) {
+          backdrop[i].addEventListener('click', function () {
+            for (var j = 0; j < menu.length; j++) {
+              menu[j].classList.toggle('hidden');
+            }
+          });
+        }
+      }
+    });
+  </script>
 </body>
+
 </html>
