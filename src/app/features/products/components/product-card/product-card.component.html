@@ -3,16 +3,16 @@
     <img [src]="product.imageCover" class="rounded-md" alt="{{product.title}}">
     <div class="icons *:group-hover:end-2 *:transition-all  ">
       <span (click)="onAddToCart()"
-        class="absolute top-2 -end-full hover:bg-nav hover:*:text-white flex duration-400 items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
-        <i class="fa-solid fa-cart-plus text-black  cursor-pointer "></i>
+        class="absolute top-2 -end-full hover:bg-nav group/a  flex duration-400 items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
+        <i class="fa-solid fa-cart-plus text-black group-hover/a:text-white  cursor-pointer "></i>
       </span>
       <span (click)="onAddToWish()"
-        class="absolute bottom-2 -end-full hover:bg-nav hover:*:text-white  cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
-        <i class="fa-regular fa-heart text-black  cursor-pointer"></i>
+        class="absolute bottom-2 -end-full hover:bg-nav group/b  cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
+        <i class="fa-regular fa-heart text-black  cursor-pointer group-hover/b:text-white"></i>
       </span>
       <span [routerLink]="['/details',product._id]"
-        class="absolute  top-2 -start-full hover:bg-nav hover:*:text-white  group-hover:start-2 cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
-        <i class="fa-solid fa-eye text-black"></i>
+        class="absolute  top-2 -start-full hover:bg-nav group/c   group-hover:start-2 cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
+        <i class="fa-solid fa-eye text-black group-hover/c:text-white"></i>
       </span>
 
 
