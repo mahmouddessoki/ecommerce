@@ -18,7 +18,7 @@ export class OrderService {
     phone: string,
     city: string,
   }): Observable<any> {
-    const url = 'http://localhost:4200'
+    const url = 'https://ecommerce-blond-ten-93.vercel.app/'
     return this.http.post(env.BASE_URL+`orders/checkout-session/` + `${cartId}/` + url,
       {
         shippingAddress
