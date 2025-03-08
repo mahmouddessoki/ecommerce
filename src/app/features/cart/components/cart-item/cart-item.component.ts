@@ -12,6 +12,7 @@ export class CartItemComponent {
 
   @Input() cartItem: Product = {} as Product;
   @Output() removeCartItem: EventEmitter<string> = new EventEmitter();
+  @Output() addWish: EventEmitter<string> = new EventEmitter();
   @Output() updateCartQty: EventEmitter<{
     productId: string,
     count: number
@@ -20,6 +21,9 @@ export class CartItemComponent {
 
   onRemoveCartItem() {
     this.removeCartItem.emit(this.cartItem.product._id);
+  }
+  OnAddTOWish() {
+    this.addWish.emit(this.cartItem.product._id);
   }
 
 

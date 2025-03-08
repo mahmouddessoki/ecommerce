@@ -9,6 +9,10 @@ import { ProductListComponent } from "../products/components/product-list/produc
 import { HomeComponent } from "./components/home/home.component";
 import { WishlistComponent } from "../wishlist/components/wishlist/wishlist.component";
 import { CategoriesComponent } from "../categories/components/categories/categories.component";
+import { OrderListComponent } from "../Order/components/order-list/order-list.component";
+import { ProfileComponent } from "../user-profile/components/profile/profile.component";
+import { UpdateDataComponent } from "../user-profile/components/update-data/update-data.component";
+import { ChangePasswordComponent } from "../user-profile/components/change-password/change-password.component";
 
 export const homeRoutes: Routes = [
   { path: 'home', component: HomeComponent, title: 'Home' },
@@ -16,7 +20,14 @@ export const homeRoutes: Routes = [
   { path: 'cart', component: CartPageComponent, title: 'Cart' },
   { path: 'products', component: ProductListComponent, title: 'Products' },
   { path: 'brands', component: BrandsComponent, title: 'Brands' },
+  { path: 'profile', loadComponent:()=>import('../user-profile/components/profile/profile.component').then(c=>c.ProfileComponent),
+    children:[
+      {path:'update' , component:UpdateDataComponent},
+      {path:'changePw' , component:ChangePasswordComponent},
+      { path: '', redirectTo:'update', pathMatch: 'full'},
+    ], title: 'Setting' },
   { path: 'cats', component: CategoriesComponent, title: 'Categories' },
+  { path: 'allorders', component: OrderListComponent, title: 'Orders' },
   {
     path: 'details/:id',
     // loadComponent: () => import('../products/components/product-details/product-details.component').then(c => ProductDetailsComponent),

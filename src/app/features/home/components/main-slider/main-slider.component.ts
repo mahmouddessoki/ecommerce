@@ -22,7 +22,8 @@ export class MainSliderComponent {
     navSpeed: 700,
     navText: ['', ''],
     items:1,
-    nav: false
+    nav: false,
+    rtl:true
   }
 
 }

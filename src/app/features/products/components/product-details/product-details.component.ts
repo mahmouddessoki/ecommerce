@@ -42,7 +42,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
 
-  getDetails(prodId:string) {
+  getDetails(prodId: string) {
     this.productsService.getProductDetails(prodId).subscribe({
       next: ({ data }) => {
         this.product = data
@@ -54,7 +54,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getRelatedProducts() {
-    this.productsService.getRelatedProducts(this.product.category._id,this.currentPage).subscribe({
+    this.productsService.getRelatedProducts(this.product.category._id, this.currentPage).subscribe({
       next: ({ data, metadata: { numberOfPages } }) => {
         this.relatedProducts = data
         this.totalPages = numberOfPages;
@@ -64,12 +64,13 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
 
-addProductToCart() {
-  this.auth.verifyToken().subscribe({
+  addProductToCart() {
+    this.auth.verifyToken().subscribe({
 
       next: (res) => {
 
-      this.sub = addToCart(this.product._id, this.toaster, this.cartService)
+        this.sub = addToCart(this.product._id, this.toaster, this.cartService)
+        localStorage.setItem(this.product.id + 'ad', 'added')
 
       }, error: (err) => {
         this.toaster.info('Please login to add products to cart')
@@ -82,7 +83,7 @@ addProductToCart() {
       next: (res) => {
 
         this.sub = addToWish(this.product._id, this.toaster, this.wishService)
-
+        localStorage.setItem(this.product.id + 'fa', 'fav')
       },
       error: (err) => {
         this.toaster.info('Please login to add products to wishlist')
@@ -91,7 +92,12 @@ addProductToCart() {
     })
   }
 
-
+  isAddedToWIsh(id: string) {
+    if (localStorage.getItem(id + 'fa') == "fav") {
+      return true;
+    }
+    return false;
+  }
 
 
 
@@ -114,6 +120,7 @@ addProductToCart() {
 
   ngOnInit(): void {
     this.getProductId();
+    this.activeImgSrc = this.product.images[0]
   }
 
   ngOnDestroy() {

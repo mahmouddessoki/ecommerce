@@ -1,15 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { WishlistService } from '../../services/wishlist.service';
-import { WishlistCardComponent } from "../wishlist-card/wishlist-card.component";
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../../Authentication/services/auth.service';
-import { addToCart, addToWish } from '../../../../shared/helpers/operations';
-import { CartService } from '../../../cart/services/cart.service';
-import { Wish } from '../../models/wish.model';
-import { RouterLink } from '@angular/router';
-import { EmptyWishComponent } from "../empty-wish/empty-wish.component";
 import { Subscription } from 'rxjs';
 import { redirectToLogin } from '../../../../shared/helpers/redirect';
+import { AuthService } from '../../../Authentication/services/auth.service';
+import { CartService } from '../../../cart/services/cart.service';
+import { Wish } from '../../models/wish.model';
+import { WishlistService } from '../../services/wishlist.service';
+import { EmptyWishComponent } from "../empty-wish/empty-wish.component";
+import { WishlistCardComponent } from "../wishlist-card/wishlist-card.component";
 
 @Component({
   selector: 'app-wishlist',
@@ -27,7 +25,7 @@ export class WishlistComponent implements OnInit {
   wishItems: Wish = {} as Wish
 
   ngOnInit() {
-    this.sub = redirectToLogin(this.auth)
+    this.sub = redirectToLogin(this.auth,'wishlist')
 
     this.getUserWishList();
   }
@@ -36,7 +34,7 @@ export class WishlistComponent implements OnInit {
     this.sub = this.wishService.getUserWishList().subscribe({
       next: (res) => {
         this.wishItems = res
-        this.wishService.wishCount.next(res.count)
+        this.wishService.wishCount.set(res.count)
 
       },
       error: (err) => {
@@ -48,19 +46,25 @@ export class WishlistComponent implements OnInit {
   removeItem(itemId: string) {
     this.wishService.removeWishItem(itemId).subscribe({
       next: (res) => {
-        this.wishService.wishCount.next(res.data.length)
-
+        this.wishService.wishCount.set(res.data.length)
+        this.getUserWishList()
         this.toatser.info("Removed From Wish List", '')
-      },
-      error: (err) => {
-        this.toatser.error("Error In Removing From Wish List", '')
-
+        localStorage.removeItem(itemId+'fa')
       }
     })
   }
 
   addProductToCart(id: string) {
-    this.sub = addToCart(id, this.toatser, this.cartService)
+    this.sub = this.cartService.addProduct(id).subscribe({
+      next: (res) => {
+        this.toatser.success('Product added to cart successfully', '')
+        this.cartService.cartCount.set(res.numOfCartItems)
+        this.removeItem(id)
+        localStorage.removeItem(id + 'fa')
+
+
+      }
+    })
   }
 
 

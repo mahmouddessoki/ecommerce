@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InvalidInputDirective } from '../../../../shared/directives/invalid-input.directive';
 import { redirectToLogin } from '../../../../shared/helpers/redirect';
 import { AuthService } from '../../../Authentication/services/auth.service';
@@ -38,6 +38,7 @@ export class CheckoutComponent {
     this.router.paramMap.subscribe({
       next: (res) => {
         this.cartId = res.get('id')!
+        redirectToLogin(this.auth, `checkout`, this.cartId)
 
       }
     })
@@ -45,7 +46,6 @@ export class CheckoutComponent {
   ngOnInit() {
 
     // this.orderService.verifyLogin()
-    redirectToLogin(this.auth)
 
     this.createForm()
     this.getCartId()
@@ -58,6 +58,7 @@ export class CheckoutComponent {
     }
 
     this.isLoading = true;
+    console.log(this.checkoutForm.value);
     this.orderService.createCheckout(this.cartId, this.checkoutForm.value).subscribe({
       next: (res) => {
         console.log(res);

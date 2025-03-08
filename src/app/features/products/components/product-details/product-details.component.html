@@ -16,15 +16,10 @@
             }
           </div>
           <div class="col-span-8">
-            <img [src]="activeImgSrc?activeImgSrc:product.imageCover" class="rounded-xl border border-gray-300">
-
+            <img [src]="activeImgSrc?activeImgSrc:product.images[0]"
+            class="rounded-xl border border-gray-300 object-contain">
           </div>
-          <!-- }@else {
-            <div class="col-span-10 mx-auto">
-              <img [src]="product.imageCover" class="rounded-xl border border-gray-300">
 
-            </div>
-          } -->
 
 
         </div>
@@ -107,9 +102,14 @@
           </button>
 
 
-          <button (click)="addProductToWish()"
-            class="border border-gray-400 hover:bg-red-500 hover:border-red-500 hover:text-white px-5 rounded-xl cursor-pointer ">
-            <i class="fa-regular fa-heart text-xl"></i>
+          <button (click)="addProductToWish()" [class]="{
+        'bg-red-500': isAddedToWIsh(product.id),
+        'bg-white': !isAddedToWIsh(product.id)
+      }" class="border border-gray-400 hover:bg-red-500 hover:border-red-500 hover:text-white group px-5 rounded-xl cursor-pointer ">
+            <i [class]="{
+        'text-white': isAddedToWIsh(product.id),
+        'text-black': !isAddedToWIsh(product.id)
+      }" class="fa-regular group-hover:text-white fa-heart text-xl"></i>
           </button>
 
 

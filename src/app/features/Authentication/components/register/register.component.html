@@ -30,8 +30,7 @@
           </div>
           <div class="relative">
             @let passControl = authForm.get('password')!;
-            <input (blur)="tooltip=false" (input)="tooltip = true"
-            appInput [control]="passControl" type="password"
+            <input (blur)="tooltip=false" (input)="tooltip = true" appInput [control]="passControl" type="password"
               data-popover-target="popover-password" popover-trigger="focus" data-popover-placement="bottom"
               name="password" id="password" placeholder="Enter your password" class="form-input"
               formControlName="password" />
@@ -56,9 +55,11 @@
           <div>
             @let rePassControl = authForm.get('rePassword')!;
 
-            <input
-            appInput [control]="rePassControl"
-            type="password" name="rePassword" id="rePassword" placeholder="confirm your password"
+            <input [class]="{
+          'invalid-input':authForm.getError('mismatch')&&(rePassControl.dirty),
+          'valid-input':(!authForm.getError('mismatch')&&(rePassControl.dirty)
+           && (passControl.valid)),
+        }" type="password" name="rePassword" id="rePassword" placeholder="confirm your password"
               class="form-input placeholder:capitalize" formControlName="rePassword" />
 
             <validation-messages [control]="authForm" />

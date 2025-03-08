@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { NgxSpinnerComponent, NgxSpinnerService } from "ngx-spinner";
-import { NavbarComponent } from "./shared/components/navbar/navbar.component";
+import { Component, HostListener, inject } from '@angular/core';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { NgxSpinnerComponent } from "ngx-spinner";
 import { AuthService } from './features/Authentication/services/auth.service';
-import { FooterComponent } from "./shared/components/footer/footer.component";
 import { CartService } from './features/cart/services/cart.service';
 import { WishlistService } from './features/wishlist/services/wishlist.service';
+import { FooterComponent } from "./shared/components/footer/footer.component";
+import { NavbarComponent } from "./shared/components/navbar/navbar.component";
 
 @Component({
   selector: 'app-root',
@@ -15,37 +15,42 @@ import { WishlistService } from './features/wishlist/services/wishlist.service';
 })
 export class AppComponent {
   sub: any;
-  constructor(private spinner: NgxSpinnerService) { }
+  currentRoute: any;
+  isScroll:boolean = false
+
   private readonly auth = inject(AuthService)
   private readonly cartService = inject(CartService)
   private readonly wishService = inject(WishlistService)
 
+  @HostListener('window:scroll') onScroll(){
+    if(document.documentElement.scrollTop > 100) {
+      this.isScroll = true
+    }else {
+      this.isScroll = false
+    }
+  }
   ngOnInit() {
     this.auth.verifyToken().subscribe({
       next: () => {
-        this.auth.isLoggedIn.next(true)
-        // this.auth.navigateToHome()
+        this.auth.isLoggedIn.set(true)
         this.getUserCart()
         this.getUserWishList()
       },
       error: () => {
-        this.auth.isLoggedIn.next(false)
-        // this.auth.navigateToHome()
-
+        this.auth.isLoggedIn.set(false)
       }
     })
 
 
 
   }
-
+  scrollTop(){
+    scrollTo(0,0)
+  }
   getUserCart() {
     this.cartService.getUserCart().subscribe({
       next: (res) => {
-        this.cartService.cartCount.next(res.numOfCartItems)
-      },
-      error: (err) => {
-        // console.log(err)
+        this.cartService.cartCount.set(res.numOfCartItems)
       }
     })
 
@@ -57,11 +62,7 @@ export class AppComponent {
     // console.log("object");
     this.sub = this.wishService.getUserWishList().subscribe({
       next: (res) => {
-        console.log(res);
-        this.wishService.wishCount.next(res.count)
-      },
-      error: (err) => {
-        console.log(err)
+        this.wishService.wishCount.set(res.count)
       }
     })
   }

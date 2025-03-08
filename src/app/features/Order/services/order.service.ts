@@ -18,11 +18,16 @@ export class OrderService {
     phone: string,
     city: string,
   }): Observable<any> {
-    const url = 'https://ecommerce-blond-ten-93.vercel.app/'
-    return this.http.post(env.BASE_URL+`orders/checkout-session/` + `${cartId}/` + url,
+    const url = encodeURIComponent('http://localhost:4200/#')
+    return this.http.post(`${env.BASE_URL}orders/checkout-session/${cartId}?url=${url}`,
       {
         shippingAddress
       })
+
+  }
+
+  getUserOrders(userId:string):Observable<any>{
+    return this.http.get(`${env.BASE_URL}orders/user/${userId}`)
 
   }
 }

@@ -7,6 +7,9 @@ import { redirectToLogin } from '../../../../shared/helpers/redirect';
 import { AuthService } from '../../../Authentication/services/auth.service';
 import { Subscription } from 'rxjs';
 import { CartEmptyComponent } from "../cart-empty/cart-empty.component";
+import { addToWish } from '../../../../shared/helpers/operations';
+import { ToastrService } from 'ngx-toastr';
+import { WishlistService } from '../../../wishlist/services/wishlist.service';
 
 @Component({
   selector: 'app-cart-page',
@@ -17,10 +20,13 @@ import { CartEmptyComponent } from "../cart-empty/cart-empty.component";
 export class CartPageComponent {
   private readonly cartService = inject(CartService)
   private readonly auth = inject(AuthService)
+  private readonly toaster = inject(ToastrService)
+  private readonly wish = inject(WishlistService)
   cartItems: Cart = {} as Cart
+  currentRoute!:string
   sub!: Subscription
   ngOnInit() {
-    this.sub = redirectToLogin(this.auth)
+    this.sub = redirectToLogin(this.auth,'cart')
     this.getUserCart()
   }
 
@@ -43,11 +49,10 @@ export class CartPageComponent {
   removeItem(itemId: string) {
     this.cartService.removeCartItem(itemId).subscribe({
       next: (res) => {
-        this.cartService.cartCount.next(res.numOfCartItems)
+        this.cartService.cartCount.set(res.numOfCartItems)
         this.cartItems = res
-      },
-      error: (err) => {
-        console.log(err)
+        localStorage.removeItem(itemId+'ad')
+
       }
     })
   }
@@ -59,12 +64,16 @@ export class CartPageComponent {
       }
     })
   }
+  addToFav(e:string){
+    addToWish(e,this.toaster,this.wish)
+  }
 
   clearCart() {
     this.cartService.clearCart().subscribe({
       next: (res) => {
         if (res.message == "success") {
           this.getUserCart()
+          this.cartService.cartCount.set(0)
         }
       }
     })

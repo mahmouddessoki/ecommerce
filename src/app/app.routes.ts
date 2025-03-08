@@ -19,21 +19,21 @@ export const routes: Routes = [
   {
     path: 'forgetPassword',
     loadComponent: () => import('./features/Authentication/components/forget-password/forget-password.component').then(c => ForgetPasswordComponent),
-    component: ForgetPasswordComponent,
+    // component: ForgetPasswordComponent,
     title: 'Forget Password'
   },
   {
     path: 'resetPassword',
     loadComponent: () => import('./features/Authentication/components/reset-password/reset-password.component').then(c => ResetPasswordComponent),
 
-    component: ResetPasswordComponent,
+    // component: ResetPasswordComponent,
     title: 'Reset Password'
   },
   {
     path: 'verify',
     loadComponent: () => import('./features/Authentication/components/verify-code/verify-code.component').then(c => VerifyCodeComponent),
 
-    component: VerifyCodeComponent,
+    // component: VerifyCodeComponent,
     title: 'Verify Code'
   },
   { path: 'checkout/:id', component: CheckoutComponent, title: 'Checkout' },

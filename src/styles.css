@@ -39,7 +39,7 @@
     @apply bg-gray-50 placeholder:capitalize mb-3 placeholder:tracking-tight border ring-0 outline-0 border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white
   }
   .form-btn {
-    @apply w-full text-white bg-gray-700 my-2 hover:bg-gray-800 cursor-pointer text-[18px] uppercase focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+    @apply w-full text-white bg-nav my-2 hover:bg-nav/80 cursor-pointer text-[18px] uppercase focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
   }
   .nav-list {
    @apply font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700
@@ -56,6 +56,7 @@
   .cart-btn{
     @apply flex w-full items-center mt-3 bg-rating justify-center rounded-lg  px-5 py-2.5 text-[17px] font-medium text-white hover:bg-rating/90 focus:outline-none   dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800
   }
+
 }
 
 
@@ -257,3 +258,26 @@ button.toast-close-button {
 }
 }
 
+
+
+
+
+section:not(.main-slider) {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-bottom: 10px;
+}
+
+
+::-webkit-scrollbar {
+width: 12px;
+}
+
+::-webkit-scrollbar-track {
+background-color: #CCCCCC;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #38AE04;
+  border-radius: 20px;
+}

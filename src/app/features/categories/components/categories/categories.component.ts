@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { CategoriesService } from '../../services/categories.service';
-import { Category } from '../../models/category';
-import { BrandCardComponent } from "../../../brands/components/brand-card/brand-card.component";
-import { CatCardComponent } from "../cat-card/cat-card.component";
 import { PaginationComponent } from "../../../../shared/components/pagination/pagination.component";
+import { Category } from '../../models/category';
+import { CategoriesService } from '../../services/categories.service';
+import { CatCardComponent } from "../cat-card/cat-card.component";
 
 @Component({
   selector: 'app-categories',
-  imports: [BrandCardComponent, CatCardComponent, PaginationComponent],
+  imports: [ CatCardComponent, PaginationComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })

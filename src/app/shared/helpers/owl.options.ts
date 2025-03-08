@@ -12,8 +12,9 @@ export const customOptions: OwlOptions = {
     margin:10,
     center:true,
     rewind: true,
-    autoplayTimeout: 4000,
+    autoplayTimeout: 3000,
     navSpeed: 700,
+    rtl : true,
     navText: ['&#x27;,&#x27;'],
     responsive: {
       0: {

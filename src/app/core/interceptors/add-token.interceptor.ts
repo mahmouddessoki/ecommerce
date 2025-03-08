@@ -5,11 +5,12 @@ import { AuthService } from '../../features/Authentication/services/auth.service
 export const addTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService)
   if (req.url.includes('cart') ||
-  req.url.includes('orders') ||
-  req.url.includes('wishlist') ) {
-    req=req.clone({
-      setHeaders:{
-        token:auth.getToken()!
+    req.url.includes('orders') ||
+    req.url.includes('wishlist') ||
+    req.url.includes('users')) {
+    req = req.clone({
+      setHeaders: {
+        token: auth.getToken()!
       }
     })
   }

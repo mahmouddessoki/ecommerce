@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID, signal, WritableSignal } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { env } from '../../../../environments/environments';
 import { RegisterUser } from '../models/register-user';
@@ -7,12 +7,13 @@ import { LoginUser } from '../models/login-user';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  isLoggedIn = new BehaviorSubject<boolean>(false)
+  isLoggedIn: WritableSignal<boolean> = signal<boolean>(false)
   private readonly platform_id = inject(PLATFORM_ID)
   private readonly router = inject(Router)
   private readonly cookie = inject(CookieService)
@@ -111,6 +112,25 @@ export class AuthService {
     })
   }
 
+
+  redirectToCurrentRoute(route:string,id?:string) {
+    if (id) {
+      this.router.navigate([route, id])
+      console.log(id);
+    } else {
+      this.router.navigate([route])
+    }
+  }
+
+
+  getUserData(): any{
+    if(this.isAuthenticated()){
+      const token = this.getToken()!
+      const decodedToken = jwtDecode(token)
+      return decodedToken
+    }
+    return null
+  }
 
 
 }

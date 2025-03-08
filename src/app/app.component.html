@@ -1,7 +1,18 @@
 <app-navbar />
-<router-outlet></router-outlet>
+<div class="main">
+  <router-outlet></router-outlet>
+</div>
 <app-footer />
+
+<button [class]="{
+  'hidden':!isScroll
+}" (click)="scrollTop()"
+  class="text-white cursor-pointer fixed bottom-[12px] right-[12px] z-40 bg-nav w-12 h-12 flex items-center justify-center text-lg rounded-full">
+  <i class="fa-solid fa-angle-up"></i>
+</button>
+
+
 <ngx-spinner name="spin1" type="ball-atom"></ngx-spinner>
+
 <!-- <ngx-spinner name="spin2" type="square-jelly-box"></ngx-spinner> -->
 <ngx-spinner name="spin2" type="ball-circus"></ngx-spinner>
-

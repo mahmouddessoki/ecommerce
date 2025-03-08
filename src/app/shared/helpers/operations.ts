@@ -10,12 +10,9 @@ export const addToCart = (id: string,
 
   return cartService.addProduct(id).subscribe({
     next: (res: any) => {
-      cartService.cartCount.next(res.numOfCartItems)
+      cartService.cartCount.set(res.numOfCartItems)
       showToaster("Product Added Successfully To Cart", toaster)
-    },
-    error: (err: any) => {
-      showToaster("Error In Adding To Cart", toaster, "error")
-
+      localStorage.setItem(id+'ad','added')
 
     }
   })
@@ -28,17 +25,16 @@ export const addToWish = (id: string,
 
   return wishService.addProduct(id).subscribe({
     next: (res: any) => {
-      wishService.wishCount.next(res.data.length)
+      wishService.wishCount.set(res.data.length)
       showToaster("Product Added Successfully To Wishlist", toaster)
-    },
-    error: (err: any) => {
-      showToaster("Error In Adding To Wishlist", toaster,"error")
+      localStorage.setItem(id+'fa', 'fav')
 
     }
   })
 
 
 }
+
 
 
 

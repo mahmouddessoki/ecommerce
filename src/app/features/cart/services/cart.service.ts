@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { AuthService } from '../../Authentication/services/auth.service';
 import { env } from '../../../../environments/environments';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -9,7 +9,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class CartService {
 
-  cartCount=new BehaviorSubject<number>(0);
+  // cartCount=new BehaviorSubject<number>(0);
+  cartCount: WritableSignal<number> =signal<number>(0);
+
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

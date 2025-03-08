@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from '@angular/router';
-import { NavbarComponent } from "../../../../shared/components/navbar/navbar.component";
 import { ValidationHintComponent } from "../../../../shared/components/validation-hint/validation-hint.component";
 import { ValidationMessagesComponent } from "../../../../shared/components/validation-messages/validation-messages.component";
+import { InvalidInputDirective } from '../../../../shared/directives/invalid-input.directive';
 import { globalValidator } from '../../../../shared/helpers/global-validators';
 import { passwordMisMatch } from '../../../../shared/helpers/password-match';
+import { redirectToHome } from '../../../../shared/helpers/redirect';
 import { RegisterUser } from '../../models/register-user';
 import { AuthService } from '../../services/auth.service';
-import { InvalidInputDirective } from '../../../../shared/directives/invalid-input.directive';
-import { redirectToHome } from '../../../../shared/helpers/redirect';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +28,8 @@ export class RegisterComponent {
   isLoading: boolean = false;
   resMsg!: string;
   tooltip: boolean = false;
-  authForm!: FormGroup
+  authForm!: FormGroup;
+  subscription: Subscription = new Subscription();
 
 
   createForm() {
@@ -52,7 +53,7 @@ export class RegisterComponent {
 
     this.isLoading = true;
     const user = ((this.authForm.value) as unknown) as RegisterUser
-    this.authService.register(user).subscribe({
+    this.subscription = this.authService.register(user).subscribe({
       next: (res) => {
         this.isLoading = false;
         this.router.navigate(['/login'])
@@ -69,7 +70,9 @@ export class RegisterComponent {
     this.createForm()
   }
 
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
 
   // get
 

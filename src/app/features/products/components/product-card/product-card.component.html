@@ -1,14 +1,27 @@
 <div>
+  <!-- {{d | date:'medium'}} -->
   <div id="product-img" class="bg-gray-200 rounded-md relative">
     <img [src]="product.imageCover" class="rounded-md" alt="{{product.title}}">
     <div class="icons *:group-hover:end-2 *:transition-all  ">
-      <span (click)="onAddToCart()"
-        class="absolute top-2 -end-full hover:bg-nav group/a  flex duration-400 items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
-        <i class="fa-solid fa-cart-plus text-black group-hover/a:text-white  cursor-pointer "></i>
+      <span (click)="onAddToCart()" [class]="{
+        'bg-nav': isAddedToCart(product.id),
+        'bg-white': !isAddedToCart(product.id)
+      }"
+        class="absolute top-2 -end-full hover:bg-nav group/a  flex duration-400 items-center justify-center w-[40px] h-[40px] text-xl rounded-md ">
+        <i [class]="{
+        'text-white': isAddedToCart(product.id),
+        'text-black': !isAddedToCart(product.id)
+      }" class="fa-solid fa-cart-plus  group-hover/a:text-white  cursor-pointer "></i>
       </span>
-      <span (click)="onAddToWish()"
+      <span (click)="onAddToWish()" [class]="{
+        'bg-red-500': isAddedToWIsh(product.id),
+        'bg-white': !isAddedToWIsh(product.id)
+      }"
         class="absolute bottom-2 -end-full hover:bg-nav group/b  cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
-        <i class="fa-solid fa-heart text-black  cursor-pointer group-hover/b:text-white"></i>
+        <i [class]="{
+        'text-white': isAddedToWIsh(product.id),
+        'text-black': !isAddedToWIsh(product.id)
+      }" class="fa-solid fa-heart   cursor-pointer group-hover/b:text-white"></i>
       </span>
       <span [routerLink]="['/details',product._id]"
         class="absolute  top-2 -start-full hover:bg-nav group/c   group-hover:start-2 cursor-pointer duration-400 flex items-center justify-center w-[40px] h-[40px] text-xl rounded-md bg-white">
@@ -19,8 +32,8 @@
 
     </div>
   </div>
-  <p class="my-4 font-bold line-clamp-1">
-    {{product.description}}
+  <p class="my-4 font-bold">
+    {{product.title | titlecase | cutWords: 2}}
   </p>
 
 

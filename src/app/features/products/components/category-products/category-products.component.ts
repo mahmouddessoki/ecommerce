@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Iproduct } from '../../../products/models/iproduct';
 import { ProductCardComponent } from "../../../products/components/product-card/product-card.component";
 import { PaginationComponent } from "../../../../shared/components/pagination/pagination.component";
@@ -18,6 +18,7 @@ import { WishlistService } from '../../../wishlist/services/wishlist.service';
 })
 export class CategoryProductsComponent {
   private readonly activatedRoute = inject(ActivatedRoute)
+  private readonly route = inject(Router)
   private readonly productsService = inject(ProductsService)
   private readonly cartService = inject(CartService)
   private readonly toaster = inject(ToastrService)
@@ -44,9 +45,16 @@ export class CategoryProductsComponent {
     this.productsService.getSpecificCategoryProds(this.catId as string, 8, this.currentPage).subscribe({
       next: ({ data, metadata: { numberOfPages } }) => {
         this.catProds = data
-        this.catName = this.catProds[0].category['name']
+        console.log(this.catProds);
+        if(this.catProds.length == 0) {
+          this.toaster.info("No Products Available its in our plan",'')
+          this.route.navigate(['home'])
+
+        }
         this.totalPages = numberOfPages;
+        this.catName = this.catProds[0].category['name']
       }
+
     })
   }
 
@@ -63,10 +71,6 @@ export class CategoryProductsComponent {
     this.auth.verifyToken().subscribe({
       next: (res) => {
         this.sub = addToCart(id, this.toaster, this.cartService)
-      },
-      error: (err) => {
-        this.toaster.info('Please login to add products to cart')
-
       }
     })
 
@@ -75,9 +79,6 @@ export class CategoryProductsComponent {
     this.auth.verifyToken().subscribe({
       next: (res) => {
         this.sub = addToWish(id, this.toaster, this.wishService)
-      },
-      error: (err) => {
-        this.toaster.info('Please login to add products to wishlist')
       }
     })
   }

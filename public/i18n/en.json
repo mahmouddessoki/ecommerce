@@ -1,0 +1,21 @@
+{
+  "navbar": {
+    "home": "Home",
+    "products": "Products",
+    "brands": "Brands",
+    "categories": "Categories",
+    "cart": "Cart",
+    "wishlist": "Wishlist",
+    "signOut": "Sign Out",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "Setting": "Setting",
+    "allorders": "Orders",
+    "ar": "Arabic",
+    "en": "English"
+  },
+  "recomended":{
+    "title": "Recomended For You",
+    "viewAll": "View All"
+  }
+}

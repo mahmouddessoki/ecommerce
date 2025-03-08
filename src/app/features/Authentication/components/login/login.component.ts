@@ -1,13 +1,12 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { globalValidator } from '../../../../shared/helpers/global-validators';
-import { AuthService } from '../../services/auth.service';
-import { LoginUser } from '../../models/login-user';
 import { RouterLink } from '@angular/router';
-import { NavbarComponent } from "../../../../shared/components/navbar/navbar.component";
+import { Subscription } from 'rxjs';
 import { InvalidInputDirective } from '../../../../shared/directives/invalid-input.directive';
-import { map, Subscription } from 'rxjs';
+import { globalValidator } from '../../../../shared/helpers/global-validators';
 import { redirectToHome } from '../../../../shared/helpers/redirect';
+import { LoginUser } from '../../models/login-user';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,7 @@ export class LoginComponent {
   authForm!: FormGroup;
   isLoading: boolean = false;
   // @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
-  sub!: Subscription
+  sub: Subscription = new Subscription()
   resMsg!: string;
 
   createForm() {
@@ -35,7 +34,7 @@ export class LoginComponent {
 
 
   ngOnInit() {
-    this.sub = redirectToHome(this.authService)
+    redirectToHome(this.authService)
     this.createForm()
 
 
@@ -48,12 +47,11 @@ export class LoginComponent {
 
     this.isLoading = true;
     const user = ((this.authForm.value) as unknown) as LoginUser
-    this.authService.login(user).subscribe({
+    this.sub = this.authService.login(user).subscribe({
       next: (res) => {
-        console.log(res);
         this.isLoading = false;
         this.authService.saveToken(res.token)
-        this.authService.isLoggedIn.next(true);
+        this.authService.isLoggedIn.set(true);
         this.authService.navigateToHome()
       },
       error: ({ error }) => {

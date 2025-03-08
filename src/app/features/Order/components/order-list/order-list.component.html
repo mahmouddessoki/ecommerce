@@ -1,0 +1,14 @@
+<section class="py-16 relative dark:bg-gray-900">
+  <div class="w-full max-w-7xl mx-auto px-4 md:px-8">
+    <h2 class="font-manrope font-extrabold text-3xl lead-10 text-black mb-9">Order History</h2>
+
+  @for (order of orders; track order._id) {
+    <app-order-card [order]="order" [orderUser]="order.user" />
+  }@empty {
+    <app-empty-orders />
+  }
+</div>
+
+
+
+</section>
