@@ -25,7 +25,7 @@ export class WishlistComponent implements OnInit {
   wishItems: Wish = {} as Wish
 
   ngOnInit() {
-    this.sub = redirectToLogin(this.auth,'wishlist')
+    this.sub = redirectToLogin(this.auth, 'wishlist')
 
     this.getUserWishList();
   }
@@ -33,6 +33,7 @@ export class WishlistComponent implements OnInit {
     // console.log("object");
     this.sub = this.wishService.getUserWishList().subscribe({
       next: (res) => {
+        
         this.wishItems = res
         this.wishService.wishCount.set(res.count)
 
@@ -49,7 +50,9 @@ export class WishlistComponent implements OnInit {
         this.wishService.wishCount.set(res.data.length)
         this.getUserWishList()
         this.toatser.info("Removed From Wish List", '')
-        localStorage.removeItem(itemId+'fa')
+        if (typeof localStorage !== "undefined") {
+          localStorage.removeItem(itemId + 'fa')
+        }
       }
     })
   }
@@ -60,7 +63,9 @@ export class WishlistComponent implements OnInit {
         this.toatser.success('Product added to cart successfully', '')
         this.cartService.cartCount.set(res.numOfCartItems)
         this.removeItem(id)
-        localStorage.removeItem(id + 'fa')
+        if (typeof localStorage !== "undefined") {
+          localStorage.removeItem(id + 'fa')
+        }
 
 
       }

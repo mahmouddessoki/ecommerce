@@ -71,6 +71,9 @@ export class CategoryProductsComponent {
     this.auth.verifyToken().subscribe({
       next: (res) => {
         this.sub = addToCart(id, this.toaster, this.cartService)
+      }, error: (err) => {
+        this.toaster.info('Please login to add products to cart')
+
       }
     })
 
@@ -79,6 +82,9 @@ export class CategoryProductsComponent {
     this.auth.verifyToken().subscribe({
       next: (res) => {
         this.sub = addToWish(id, this.toaster, this.wishService)
+      }, error: (err) => {
+        this.toaster.info('Please login to add products to wish')
+
       }
     })
   }

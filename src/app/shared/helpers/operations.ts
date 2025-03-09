@@ -12,7 +12,9 @@ export const addToCart = (id: string,
     next: (res: any) => {
       cartService.cartCount.set(res.numOfCartItems)
       showToaster("Product Added Successfully To Cart", toaster)
-      localStorage.setItem(id+'ad','added')
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem(id + 'ad', 'added')
+      }
 
     }
   })
@@ -27,7 +29,9 @@ export const addToWish = (id: string,
     next: (res: any) => {
       wishService.wishCount.set(res.data.length)
       showToaster("Product Added Successfully To Wishlist", toaster)
-      localStorage.setItem(id+'fa', 'fav')
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem(id + 'fa', 'fav')
+      }
 
     }
   })

@@ -24,7 +24,7 @@ export class CartPageComponent {
   private readonly wish = inject(WishlistService)
   cartItems: Cart = {} as Cart
   currentRoute!:string
-  sub!: Subscription
+  sub= new Subscription()
   ngOnInit() {
     this.sub = redirectToLogin(this.auth,'cart')
     this.getUserCart()
@@ -35,10 +35,8 @@ export class CartPageComponent {
   getUserCart() {
     this.cartService.getUserCart().subscribe({
       next: (res) => {
+        console.log(res);
         this.cartItems = res;
-      },
-      error: (err) => {
-        // console.log(err)
       }
     })
 
@@ -51,7 +49,9 @@ export class CartPageComponent {
       next: (res) => {
         this.cartService.cartCount.set(res.numOfCartItems)
         this.cartItems = res
-        localStorage.removeItem(itemId+'ad')
+        if (typeof localStorage !== "undefined") {
+          localStorage.removeItem(itemId+'ad')
+        }
 
       }
     })
@@ -74,6 +74,13 @@ export class CartPageComponent {
         if (res.message == "success") {
           this.getUserCart()
           this.cartService.cartCount.set(0)
+          if (typeof localStorage!== "undefined") {
+            let i = 0
+            while(localStorage.getItem(this.cartItems.data.products[i].product.id)){
+              localStorage.removeItem(this.cartItems.data.products[i].product.id+'ad')
+              i++
+            }
+          }
         }
       }
     })
