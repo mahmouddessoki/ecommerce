@@ -74,7 +74,7 @@ export class CartPageComponent {
         if (res.message == "success") {
           this.getUserCart()
           this.cartService.cartCount.set(0)
-          if (typeof localStorage!== "undefined") {
+          if (typeof localStorage !== "undefined") {
             let i = 0
             while(localStorage.getItem(this.cartItems.data.products[i].product.id)){
               localStorage.removeItem(this.cartItems.data.products[i].product.id+'ad')

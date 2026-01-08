@@ -1,9 +1,10 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-main-slider',
-  imports: [CarouselModule],
+  imports: [CarouselModule,NgOptimizedImage],
   templateUrl: './main-slider.component.html',
   styleUrl: './main-slider.component.css'
 })

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { BrandCardComponent } from "../brand-card/brand-card.component";
 import { BrandsService } from '../../services/brands.service';
 import { Ibrand } from '../../models/ibrand';
@@ -13,13 +13,13 @@ import { PaginationComponent } from "../../../../shared/components/pagination/pa
 export class BrandsComponent {
 
   private readonly brandsService = inject(BrandsService)
-  brands: Ibrand[] = []
+  brands: WritableSignal<Ibrand[]> = signal<Ibrand[]>([])
   currentPage: number = 1;
   totalPages!: number;
   getBrands() {
     this.brandsService.getBrands(this.currentPage).subscribe({
       next: ({ data, metadata: { numberOfPages } }) => {
-        this.brands = data;
+        this.brands.set(data)
         this.totalPages = numberOfPages;
 
       }

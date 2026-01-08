@@ -7,20 +7,17 @@
 
     </div>
 
+    @if(cats().length){
     <div class="grid gap-10 grid-cols-12">
 
-      @for (cat of cats; track cat._id) {
+      @for (cat of cats(); track cat._id) {
       <div class="sm:cols-span-6 cursor-pointer md:col-span-4 col-span-12">
         <app-cat-card [cat]="cat" />
       </div>
       }
     </div>
-
-
-
-
     <app-pagination [totalPages]="totalPages" (currentPageChange)="getPage($event)" />
-
+}
 
   </div>
 

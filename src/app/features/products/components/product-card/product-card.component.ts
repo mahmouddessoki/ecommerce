@@ -26,13 +26,16 @@ export class ProductCardComponent {
 
 
   isAddedToCart(id:string){
-    if(localStorage.getItem(id+'ad')=="added") {
+    if(localStorage.getItem(id+'ad')=="added" && typeof localStorage !== "undefined" ) {
       return true;
     }
     return false;
   }
   isAddedToWIsh(id:string){
-    if(localStorage.getItem(id+'fa') == "fav") {
+    if (
+      localStorage.getItem(id + 'fa') == 'fav' &&
+      typeof localStorage !== 'undefined'
+    ) {
       return true;
     }
     return false;

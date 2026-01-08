@@ -7,4 +7,4 @@ import { FormControl } from "@angular/forms";
         return null;
       }
       return { phoneInvalid: true };
-    }
+}

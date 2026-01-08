@@ -40,7 +40,6 @@ export class ProductListComponent {
 
   constructor() {
     this.currentRoute = this.activatedRoute.snapshot.url.map(segment => segment.path).join('/');
-    console.log('Current Route:', this.currentRoute);
   }
   getProducts() {
     this.sub = this.productsService.getAllProducts(this.currentPage).subscribe({

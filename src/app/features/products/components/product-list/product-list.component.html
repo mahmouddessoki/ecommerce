@@ -24,6 +24,8 @@
 
     </div>
 
+    @if(products().length){
+
     <div class="grid grid-cols-12 gap-5">
       @for (product of products()|search:searchValue; track product._id) {
       <div id="product-card"
@@ -34,18 +36,19 @@
       </div>
       }
     </div>
-
-
-
-
-
-
-
-
-
-
-
     <app-pagination [totalPages]="totalPages" (currentPageChange)="getPage($event)" />
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

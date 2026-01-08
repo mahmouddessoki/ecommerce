@@ -27,7 +27,8 @@ export const appConfig: ApplicationConfig = {
       scrollPositionRestoration: "enabled"
     }), withViewTransitions()),
   provideClientHydration(withEventReplay())
-    , provideHttpClient(withFetch(), withInterceptors([addTokenInterceptor, loadingInterceptor, errorsInterceptor]))
+    , provideHttpClient(withFetch(),
+     withInterceptors([addTokenInterceptor, loadingInterceptor, errorsInterceptor]))
     , importProvidersFrom(
       BrowserAnimationsModule,
       NgxSpinnerModule,

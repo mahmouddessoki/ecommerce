@@ -7,20 +7,19 @@
 
     </div>
 
-    <div class="grid gap-10 grid-cols-12">
+    @if(brands().length) {
 
-      @for (brand of brands; track brand._id) {
-      <div class="sm:cols-span-6 cursor-pointer md:col-span-4 col-span-12">
+      <div class="grid gap-10 grid-cols-12">
 
-        <app-brand-card [brand]="brand" />
+        @for (brand of brands(); track brand._id) {
+        <div class="sm:cols-span-6 cursor-pointer md:col-span-4 col-span-12">
+
+          <app-brand-card [brand]="brand" />
+        </div>
+        }
       </div>
-      }
-    </div>
-
-
-
-
-    <app-pagination [totalPages]="totalPages" (currentPageChange)="getPage($event)" />
+      <app-pagination [totalPages]="totalPages" (currentPageChange)="getPage($event)" />
+    }
 
 
 
